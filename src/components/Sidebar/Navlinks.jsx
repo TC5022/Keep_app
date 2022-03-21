@@ -6,24 +6,22 @@ import { Link } from "react-router-dom";
 export const NavLinks = ({ link, icon, text, isActive }) => {
   return (
     <>
-      <Link
-        to={link}
-        //   color={isActive ? "#4318FF" : "#000"}
-      >
-      <Button
-      w="full"
-        size="lg"
-        fontSize="xl"
-        justifyContent={"start"}
-        variant="ghost"
-        _hover={isActive ? { bgColor: "none" } : { bgColor: "#EDF2F7" }}
-        bgColor={isActive ? "rgba(245, 186, 19, 0.2)" : "transparent"}
-        py={8}
-        borderRadius="full"
-        leftIcon={icon}
-      >
-        {text}
-      </Button>
+      <Link to={link}>
+        <Button
+          w="full"
+          size="lg"
+          fontSize="xl"
+          justifyContent={"start"}
+          variant="ghost"
+          _hover={isActive ? { bgColor: "none" } : { bgColor: "#EDF2F7" }}
+          _focus={{ outline: "none" }}
+          bgColor={isActive ? "rgba(245, 186, 19, 0.2)" : "transparent"}
+          py={8}
+          borderRadius="full"
+          leftIcon={icon}
+        >
+          {text}
+        </Button>
       </Link>
     </>
   );

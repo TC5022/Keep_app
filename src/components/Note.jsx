@@ -23,14 +23,14 @@ import { MdOutlineArchive } from "react-icons/md";
 
 //actions
 import { archiveNote, deleteNote, editNote } from "../actions";
+import { NoteButton } from "./NoteButton";
 
 function Note(props) {
-
   const [state, setState] = useState({
     title: props.title,
     content: props.content,
     editMode: false,
-    color: ""
+    color: "",
   });
 
   const dispatch = useDispatch();
@@ -55,14 +55,14 @@ function Note(props) {
       ...state,
       [fieldname]: val,
     });
-  };
+  }
 
-  function handleSave(){
-    const {title, content} = state;
+  function handleSave() {
+    const { title, content } = state;
     const newNote = {
       title: title,
-      content: content
-    }
+      content: content,
+    };
     dispatch(editNote(newNote, props.id));
 
     handleChange("editMode", false);
@@ -106,30 +106,18 @@ function Note(props) {
 
         <Flex flexDir="row">
           {state.editMode ? (
-            <IconButton
-              _hover={{ bg: "rgba(95,99,104,0.157)" }}
-              _focus={{ bg: "none", outline: "none" }}
-              onClick={() => handleSave()}
-              bg="none"
-              borderRadius="full"
+            <NoteButton
+              onChange={() => handleSave()}
               icon={<AiOutlineSave fontSize={"20px"} />}
             />
           ) : (
-            <IconButton
-              _hover={{ bg: "rgba(95,99,104,0.157)" }}
-              _focus={{ bg: "none", outline: "none" }}
-              onClick={() => handleChange("editMode", true)}
-              bg="none"
-              borderRadius="full"
+            <NoteButton
+              onChange={() => handleChange("editMode", true)}
               icon={<AiOutlineEdit fontSize={"20px"} />}
             />
           )}
-          <IconButton
-            _hover={{ bg: "rgba(95,99,104,0.157)" }}
-            _focus={{ bg: "none", outline: "none" }}
-            onClick={() => dispatch(deleteNote(props.id))}
-            bg="none"
-            borderRadius="full"
+          <NoteButton
+            onChange={() => dispatch(deleteNote(props.id))}
             icon={<BiImage fontSize={"20px"} />}
           />
 
@@ -168,22 +156,13 @@ function Note(props) {
               </SimpleGrid>
             </PopoverBody>
           </PopoverContent>
-          <IconButton
-            _hover={{ bg: "rgba(95,99,104,0.157)" }}
-            _focus={{ bg: "none", outline: "none" }}
-            // onClick={}
-            bg="none"
-            borderRadius="full"
-            onClick={() => dispatch(archiveNote(props.note, props.id))}
+
+          <NoteButton
+            onChange={() => dispatch(archiveNote(props.note, props.id))}
             icon={<MdOutlineArchive fontSize={"20px"} />}
           />
-          <IconButton
-            _hover={{ bg: "rgba(95,99,104,0.157)" }}
-            _focus={{ bg: "none", outline: "none" }}
-            // onClick={}
-            bg="none"
-            borderRadius="full"
-            onClick={() => dispatch(deleteNote(props.id))}
+          <NoteButton
+            onChange={() => dispatch(deleteNote(props.id))}
             icon={<AiOutlineDelete fontSize={"20px"} />}
           />
         </Flex>
