@@ -13,16 +13,16 @@ import {
   Button,
   Input
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //icons
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { BiImage } from "react-icons/bi";
 import { IoColorPaletteOutline } from "react-icons/io5";
-import { MdOutlineArchive } from "react-icons/md";
+import { MdOutlineArchive, MdOutlineUnarchive } from "react-icons/md";
 
 //actions
-import { archiveNote, deleteNote, editNote } from "../actions";
+import { archiveNote, deleteArchive, deleteNote, editNote, unarchiveNote } from "../actions";
 import { NoteButton } from "./NoteButton";
 
 function Note(props) {
@@ -34,6 +34,7 @@ function Note(props) {
   });
 
   const dispatch = useDispatch();
+  const archives = useSelector((state) => state.archives);
 
   const colors = [
     "#ffffff",
@@ -49,6 +50,15 @@ function Note(props) {
     "#e6c9a8",
     "#e8eaed",
   ];
+
+  function isArchive(note) {
+    const index = archives.indexOf(note);
+    if (index !== -1) {
+      return true;
+    }
+
+    return false;
+  }
 
   function handleChange(fieldname, val) {
     setState({
@@ -157,14 +167,29 @@ function Note(props) {
             </PopoverBody>
           </PopoverContent>
 
-          <NoteButton
-            onChange={() => dispatch(archiveNote(props.note, props.id))}
-            icon={<MdOutlineArchive fontSize={"20px"} />}
-          />
-          <NoteButton
-            onChange={() => dispatch(deleteNote(props.id))}
-            icon={<AiOutlineDelete fontSize={"20px"} />}
-          />
+          {isArchive(props.note) ? (
+            <NoteButton
+              onChange={() => dispatch(unarchiveNote(props.note, props.id))}
+              icon={<MdOutlineUnarchive fontSize={"20px"} />}
+            />
+          ) : (
+            <NoteButton
+              onChange={() => dispatch(archiveNote(props.note, props.id))}
+              icon={<MdOutlineArchive fontSize={"20px"} />}
+            />
+          )}
+
+          {isArchive(props.note) ? (
+            <NoteButton
+              onChange={() => dispatch(deleteArchive(props.id))}
+              icon={<AiOutlineDelete fontSize={"20px"} />}
+            />
+          ) : (
+            <NoteButton
+              onChange={() => dispatch(deleteNote(props.id))}
+              icon={<AiOutlineDelete fontSize={"20px"} />}
+            />
+          )}
         </Flex>
       </Box>
     </Popover>

@@ -1,8 +1,15 @@
-import { ARCHIVE_NOTE, CREATE_NOTE, DELETE_NOTE, EDIT_NOTE } from "../actions";
+import {
+  ARCHIVE_NOTE,
+  CREATE_NOTE,
+  DELETE_ARCHIVE,
+  DELETE_NOTE,
+  EDIT_NOTE,
+  UNARCHIVE_NOTE,
+} from "../actions";
 
 const initialMoviesState = {
   notes: [],
-  archives: []
+  archives: [],
 };
 
 export default function notes(state = initialMoviesState, action) {
@@ -13,8 +20,10 @@ export default function notes(state = initialMoviesState, action) {
         notes: [action.note, ...state.notes],
       };
     case DELETE_NOTE:
-      const filteredNotes = state.notes.filter((note, index) => index !== action.id);
-      return {...state, notes: filteredNotes };
+      const filteredNotes = state.notes.filter(
+        (note, index) => index !== action.id
+      );
+      return { ...state, notes: filteredNotes };
     case EDIT_NOTE:
       const updatedNotes = [...state.notes];
       updatedNotes[action.id] = action.newNote;
@@ -27,7 +36,25 @@ export default function notes(state = initialMoviesState, action) {
       const filteredNote = state.notes.filter(
         (note, index) => index !== action.id
       );
-      return { ...state, notes: filteredNote, archives: [action.note, ...state.archives] };
+      return {
+        ...state,
+        notes: filteredNote,
+        archives: [action.note, ...state.archives],
+      };
+    case UNARCHIVE_NOTE:
+      const filteredArchive = state.archives.filter(
+        (note, index) => index !== action.id
+      );
+      return {
+        ...state,
+        notes: [action.note, ...state.notes],
+        archives: filteredArchive,
+      };
+    case DELETE_ARCHIVE:
+      const filteredArchives = state.archives.filter(
+        (note, index) => index !== action.id
+      );
+      return { ...state, archives: filteredArchives };
     default:
       return state;
   }

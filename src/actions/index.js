@@ -5,6 +5,7 @@ export const EDIT_NOTE = "EDIT_NOTE";
 
 export const ARCHIVE_NOTE = "ARCHIVE_NOTE";
 export const UNARCHIVE_NOTE = "UNARCHIVE_NOTE";
+export const DELETE_ARCHIVE = "DELETE_ARCHIVE";
 
 export function addNotes(notes){
     return{
@@ -47,6 +48,13 @@ export function unarchiveNote(note, id) {
   return {
     type: UNARCHIVE_NOTE,
     note,
+    id,
+  };
+}
+
+export function deleteArchive(id) {
+  return {
+    type: DELETE_ARCHIVE,
     id,
   };
 }
