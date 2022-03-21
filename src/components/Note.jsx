@@ -13,15 +13,16 @@ import {
   Button,
   Input
 } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
 
 //icons
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { BiImage } from "react-icons/bi";
 import { IoColorPaletteOutline } from "react-icons/io5";
-import { useDispatch } from "react-redux";
+import { MdOutlineArchive } from "react-icons/md";
 
 //actions
-import { deleteNote, editNode } from "../actions";
+import { archiveNote, deleteNote, editNote } from "../actions";
 
 function Note(props) {
 
@@ -56,17 +57,13 @@ function Note(props) {
     });
   };
 
-  function handleDelete() {
-    dispatch(deleteNote(props.id));
-  }
-
   function handleSave(){
     const {title, content} = state;
     const newNote = {
       title: title,
       content: content
     }
-    dispatch(editNode(newNote, props.id));
+    dispatch(editNote(newNote, props.id));
 
     handleChange("editMode", false);
   }
@@ -130,7 +127,7 @@ function Note(props) {
           <IconButton
             _hover={{ bg: "rgba(95,99,104,0.157)" }}
             _focus={{ bg: "none", outline: "none" }}
-            onClick={handleDelete}
+            onClick={() => dispatch(deleteNote(props.id))}
             bg="none"
             borderRadius="full"
             icon={<BiImage fontSize={"20px"} />}
@@ -171,13 +168,22 @@ function Note(props) {
               </SimpleGrid>
             </PopoverBody>
           </PopoverContent>
-          
           <IconButton
             _hover={{ bg: "rgba(95,99,104,0.157)" }}
             _focus={{ bg: "none", outline: "none" }}
-            onClick={handleDelete}
+            // onClick={}
             bg="none"
             borderRadius="full"
+            onClick={() => dispatch(archiveNote(props.note, props.id))}
+            icon={<MdOutlineArchive fontSize={"20px"} />}
+          />
+          <IconButton
+            _hover={{ bg: "rgba(95,99,104,0.157)" }}
+            _focus={{ bg: "none", outline: "none" }}
+            // onClick={}
+            bg="none"
+            borderRadius="full"
+            onClick={() => dispatch(deleteNote(props.id))}
             icon={<AiOutlineDelete fontSize={"20px"} />}
           />
         </Flex>

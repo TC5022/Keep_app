@@ -6,7 +6,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
-import App from "./components/App";
+import App from "./App";
 import theme from "./theme";
 import rootReducer from "./reducers";
 

@@ -40,7 +40,7 @@ function CreateArea(props) {
   }
 
   return (
-    <Flex alignItems="center" flexDir="column" my={8}>
+    <Flex alignItems="center" flexDir="column" my={8} w="full">
       <form className="create-note">
         {isExpanded ? (
           <Input

@@ -1,7 +1,8 @@
-import { CREATE_NOTE, DELETE_NOTE, EDIT_NOTE } from "../actions";
+import { ARCHIVE_NOTE, CREATE_NOTE, DELETE_NOTE, EDIT_NOTE } from "../actions";
 
 const initialMoviesState = {
   notes: [],
+  archives: []
 };
 
 export default function notes(state = initialMoviesState, action) {
@@ -22,6 +23,11 @@ export default function notes(state = initialMoviesState, action) {
         ...state,
         notes: updatedNotes,
       };
+    case ARCHIVE_NOTE:
+      const filteredNote = state.notes.filter(
+        (note, index) => index !== action.id
+      );
+      return { ...state, notes: filteredNote, archives: [action.note, ...state.archives] };
     default:
       return state;
   }

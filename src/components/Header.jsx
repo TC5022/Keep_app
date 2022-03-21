@@ -1,12 +1,12 @@
 import React from "react";
-import HighlightIcon from "@material-ui/icons/Highlight";
+import { MdHighlight } from "react-icons/md";
 import { Heading } from "@chakra-ui/react";
 
 function Header() {
   return (
     <header>
       <Heading color="#fff">
-        <HighlightIcon /> Keeper
+        <MdHighlight style={{display: "inline"}} /> Keeper
       </Heading>
     </header>
   );
