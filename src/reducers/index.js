@@ -1,5 +1,7 @@
 import {
   ARCHIVE_NOTE,
+  COPY_ARCHIVE,
+  COPY_NOTE,
   CREATE_NOTE,
   DELETE_ARCHIVE,
   DELETE_NOTE,
@@ -32,6 +34,11 @@ export default function notes(state = initialMoviesState, action) {
         ...state,
         notes: updatedNotes,
       };
+    case COPY_NOTE:
+      return {
+        ...state,
+        notes: [action.note, ...state.notes],
+      };
     case ARCHIVE_NOTE:
       const filteredNote = state.notes.filter(
         (note, index) => index !== action.id
@@ -49,6 +56,11 @@ export default function notes(state = initialMoviesState, action) {
         ...state,
         notes: [action.note, ...state.notes],
         archives: filteredArchive,
+      };
+    case COPY_ARCHIVE:
+      return {
+        ...state,
+        archives: [action.note, ...state.archives],
       };
     case DELETE_ARCHIVE:
       const filteredArchives = state.archives.filter(

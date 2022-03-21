@@ -16,13 +16,18 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 //icons
-import { AiOutlineDelete, AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
+import {
+  AiOutlineDelete,
+  AiOutlineEdit,
+  AiOutlineSave,
+  AiOutlineCopy,
+} from "react-icons/ai";
 import { BiImage } from "react-icons/bi";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { MdOutlineArchive, MdOutlineUnarchive } from "react-icons/md";
 
 //actions
-import { archiveNote, deleteArchive, deleteNote, editNote, unarchiveNote } from "../actions";
+import { archiveNote, copyArchive, copyNote, deleteArchive, deleteNote, editNote, unarchiveNote } from "../actions";
 import { NoteButton } from "./NoteButton";
 
 function Note(props) {
@@ -176,6 +181,18 @@ function Note(props) {
             <NoteButton
               onChange={() => dispatch(archiveNote(props.note, props.id))}
               icon={<MdOutlineArchive fontSize={"20px"} />}
+            />
+          )}
+
+          {isArchive(props.note) ? (
+            <NoteButton
+              onChange={() => dispatch(copyArchive(props.note))}
+              icon={<AiOutlineCopy fontSize={"20px"} />}
+            />
+          ) : (
+            <NoteButton
+              onChange={() => dispatch(copyNote(props.note))}
+              icon={<AiOutlineCopy fontSize={"20px"} />}
             />
           )}
 
