@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Heading,
@@ -11,9 +11,12 @@ import {
   PopoverBody,
   SimpleGrid,
   Button,
-  Input
+  Input,
+  useDisclosure,
+  Image,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
+import { Canvas } from "./Canvas/Canvas";
 
 //icons
 import {
@@ -24,22 +27,65 @@ import {
 } from "react-icons/ai";
 import { BiImage } from "react-icons/bi";
 import { IoColorPaletteOutline } from "react-icons/io5";
-import { MdOutlineArchive, MdOutlineUnarchive } from "react-icons/md";
+import {
+  MdOutlineArchive,
+  MdOutlineUnarchive,
+  MdOutlineDraw,
+} from "react-icons/md";
 
 //actions
-import { archiveNote, copyArchive, copyNote, deleteArchive, deleteNote, editNote, unarchiveNote } from "../actions";
+import {
+  archiveNote,
+  copyArchive,
+  copyNote,
+  deleteArchive,
+  deleteNote,
+  editNote,
+  unarchiveNote,
+} from "../actions";
 import { NoteButton } from "./NoteButton";
 
 function Note(props) {
   const [state, setState] = useState({
+    id: props.index,
     title: props.title,
     content: props.content,
+    color: props.color,
+    imagesrc: props.imagesrc,
     editMode: false,
-    color: "",
   });
+
+  useEffect(() => {
+    if (state.id !== props.index) {
+      setState({
+        ...state,
+        id: props.index,
+        title: props.title,
+        content: props.content,
+        color: props.color,
+        imagesrc: props.imagesrc,
+      });
+    }
+  }, [state, props.title, props.content, props]);
 
   const dispatch = useDispatch();
   const archives = useSelector((state) => state.archives);
+  const { onOpen, isOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    const { title, content, color, id, imagesrc } = state;
+    if (color !== props.color || imagesrc !== props.imagesrc) {
+      const newNote = {
+        id: id,
+        title: title,
+        content: content,
+        color: color,
+        imagesrc: imagesrc,
+      };
+
+      dispatch(editNote(newNote, state.id));
+    }
+  }, [state, dispatch, props.color, props.imagesrc]);
 
   const colors = [
     "#ffffff",
@@ -61,26 +107,32 @@ function Note(props) {
     if (index !== -1) {
       return true;
     }
-
     return false;
   }
 
   function handleChange(fieldname, val) {
-    setState({
-      ...state,
-      [fieldname]: val,
-    });
+    fieldname === "imagesrc"
+      ? setState({
+          ...state,
+          imagesrc: [...state.imagesrc, val],
+        })
+      : setState({
+          ...state,
+          [fieldname]: val,
+        });
   }
 
   function handleSave() {
-    const { title, content } = state;
+    const { title, content, color, id, imagesrc } = state;
     const newNote = {
+      id: id,
       title: title,
       content: content,
+      color: color,
+      imagesrc: imagesrc
     };
-    dispatch(editNote(newNote, props.id));
-
-    handleChange("editMode", false);
+    dispatch(editNote(newNote, state.id));
+    state.editMode === true && handleChange("editMode", false);
   }
 
   return (
@@ -89,12 +141,20 @@ function Note(props) {
         borderRadius="7px"
         p={5}
         m="16px"
-        boxShadow="0 2px 5px #ccc"
+        border="1px solid"
+        // boxShadow="0 2px 5px #ccc"
         w="20vw"
         bg="#fff"
         float="left"
-        style={{ backgroundColor: state.color }}
+        style={{ backgroundColor: state.color, borderColor: state.color || "#e0e0e0" }}
       >
+        {state.imagesrc.length !== 0 && (
+          <SimpleGrid minChildWidth="80px" spacing={2} mb={3}>
+            {state.imagesrc.map((image, index) => (
+              <Image key={index} src={image} />
+            ))}
+          </SimpleGrid>
+        )}
         {state.editMode ? (
           <Input
             type="text"
@@ -119,7 +179,7 @@ function Note(props) {
           </Text>
         )}
 
-        <Flex flexDir="row">
+        <Flex flexDir="row" ml="-15px">
           {state.editMode ? (
             <NoteButton
               onChange={() => handleSave()}
@@ -134,6 +194,20 @@ function Note(props) {
           <NoteButton
             onChange={() => dispatch(deleteNote(props.id))}
             icon={<BiImage fontSize={"20px"} />}
+          />
+
+          <IconButton
+            _hover={{ bg: "rgba(95,99,104,0.157)" }}
+            _focus={{ bg: "none", outline: "none" }}
+            bg="none"
+            borderRadius="full"
+            icon={<MdOutlineDraw fontSize={"20px"} />}
+            onClick={onOpen}
+          />
+          <Canvas
+            isOpen={isOpen}
+            onClose={onClose}
+            handleChange={handleChange}
           />
 
           {/* handles background change for the note */}
@@ -153,19 +227,18 @@ function Note(props) {
           >
             <PopoverBody pl={2} py={1} pr={0}>
               <SimpleGrid columns={4} spacing={0}>
-                {colors.map((colors, index) => (
+                {colors.map((color, index) => (
                   <Button
                     key={index}
                     _hover={{ border: "black solid 3px" }}
                     _focus={{ outline: "none" }}
-                    style={{ backgroundColor: colors }}
+                    style={{ backgroundColor: color }}
                     boxShadow="0 1px 4px rgb(0 0 0 / 20%)"
                     w="30px"
                     h="35px"
                     my={1}
                     borderRadius={"full"}
-                    name={colors}
-                    onClick={(e) => handleChange("color", e.target.name)}
+                    onClick={() => handleChange("color", color)}
                   ></Button>
                 ))}
               </SimpleGrid>

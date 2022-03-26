@@ -1,15 +1,20 @@
 import React from "react";
 import Note from "../components/Note";
 
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 function Archives(props) {
   const archives = useSelector((state) => state.archives);
 
   return (
-    <Box>
-      <Box pl={10}>
+    <Flex maxW="100vw" flexDir="column">
+        <Header />
+        <Flex>
+          <Sidebar />
+          <Box pl={10}>
         {archives &&
           archives.map((noteItem, index) => {
             return (
@@ -23,7 +28,10 @@ function Archives(props) {
             );
           })}
       </Box>
-    </Box>
+        </Flex>
+
+        {/* <Footer /> */}
+      </Flex>
   );
 }
 

@@ -28,7 +28,8 @@ export default function notes(state = initialMoviesState, action) {
       return { ...state, notes: filteredNotes };
     case EDIT_NOTE:
       const updatedNotes = [...state.notes];
-      updatedNotes[action.id] = action.newNote;
+      const index = updatedNotes.findIndex(note => note.id === action.id);
+      updatedNotes[index] = action.newNote;
 
       return {
         ...state,

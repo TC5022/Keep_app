@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 
 import { Textarea, Input, Flex } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createNote } from "../actions";
 
 function CreateArea(props) {
+  const notes = useSelector((state) => state.notes);
   const [isExpanded, setIsExpanded] = useState(false);
   const [note, setNote] = useState({
+    id: 0,
     title: "hi",
     content: "hello",
+    imagesrc: [],
+    color: ""
   });
+
+  useEffect(() => {
+    let index = notes.length;
+    setNote((prevNote) => {
+      return {
+        ...prevNote,
+        id: index,
+      };
+    });
+  }, [notes.length]);
 
   const dispatch = useDispatch();
 
@@ -29,8 +43,11 @@ function CreateArea(props) {
   function submitNote(event) {
     dispatch(createNote(note));
     setNote({
+      ...note,
       title: "hi",
       content: "hello",
+      imagesrc: [],
+      color: ""
     });
     event.preventDefault();
   }
