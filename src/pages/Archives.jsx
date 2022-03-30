@@ -22,8 +22,11 @@ function Archives(props) {
                 key={index}
                 id={index}
                 note={noteItem}
+                index={noteItem.id}
                 title={noteItem.title}
                 content={noteItem.content}
+                color={noteItem.color}
+                imagesrc={noteItem.imagesrc}
               />
             );
           })}
