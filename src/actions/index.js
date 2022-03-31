@@ -9,6 +9,8 @@ export const UNARCHIVE_NOTE = "UNARCHIVE_NOTE";
 export const DELETE_ARCHIVE = "DELETE_ARCHIVE";
 export const COPY_ARCHIVE = "COPY_ARCHIVE";
 
+export const SEARCH = "SEARCH";
+
 export function addNotes(notes){
     return{
         type: ADD_NOTES,
@@ -72,5 +74,12 @@ export function copyArchive(note) {
   return {
     type: COPY_ARCHIVE,
     note,
+  };
+}
+
+export function search(text) {
+  return {
+    type: SEARCH,
+    text
   };
 }

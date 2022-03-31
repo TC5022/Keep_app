@@ -7,11 +7,13 @@ import {
   DELETE_NOTE,
   EDIT_NOTE,
   UNARCHIVE_NOTE,
+  SEARCH,
 } from "../actions";
 
 const initialMoviesState = {
   notes: [],
   archives: [],
+  search: []
 };
 
 export default function notes(state = initialMoviesState, action) {
@@ -68,6 +70,18 @@ export default function notes(state = initialMoviesState, action) {
         (note, index) => index !== action.id
       );
       return { ...state, archives: filteredArchives };
+    case SEARCH:
+      const {text} = action;
+      const notess = state.notes.filter(
+        (note) => note.title.includes(text) || note.content.includes(text)
+      );
+      const archivess = state.archives.filter(
+        (note) => note.title.includes(text) || note.content.includes(text)
+      );
+      return {
+        ...state,
+        search: [...notess, ...archivess],
+      };
     default:
       return state;
   }

@@ -146,7 +146,10 @@ function Note(props) {
         w="20vw"
         bg="#fff"
         float="left"
-        style={{ backgroundColor: state.color, borderColor: state.color || "#e0e0e0" }}
+        style={{
+          backgroundColor: state.color,
+          borderColor: state.color || "#e0e0e0",
+        }}
       >
         {state.imagesrc.length !== 0 && (
           <SimpleGrid minChildWidth="80px" spacing={2} mb={3}>

@@ -4,13 +4,14 @@ import Note from "../components/Note";
 import { Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-function Archives(props) {
-  const archives = useSelector((state) => state.archives);
+function Search(props) {
+
+  const results = useSelector((state) => state.search);
 
   return (
     <Box pl={10}>
-      {archives &&
-        archives.map((noteItem, index) => {
+      {results &&
+        results.map((noteItem, index) => {
           return (
             <Note
               key={index}
@@ -28,4 +29,4 @@ function Archives(props) {
   );
 }
 
-export default Archives;
+export default Search;
