@@ -14,7 +14,8 @@ function CreateArea(props) {
     title: "hi",
     content: "hello",
     imagesrc: [],
-    color: ""
+    color: "",
+    labels: [] 
   });
 
   useEffect(() => {
@@ -47,7 +48,8 @@ function CreateArea(props) {
       title: "hi",
       content: "hello",
       imagesrc: [],
-      color: ""
+      color: "",
+      labels: []
     });
     event.preventDefault();
   }

@@ -33,7 +33,10 @@ function Header() {
           variant="filled"
           _focus={{ variant: "filled" }}
         >
-          <InputLeftElement children={<MdOutlineSearch />} />
+          <InputLeftElement
+            pointerEvents="none"
+            children={<MdOutlineSearch />}
+          />
           <Input
             placeholder="Search"
             background="#fffff"

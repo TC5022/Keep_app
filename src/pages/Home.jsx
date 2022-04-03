@@ -24,6 +24,7 @@ function Home() {
                   content={noteItem.content}
                   color={noteItem.color}
                   imagesrc={noteItem.imagesrc}
+                  labels={noteItem.labels}
                 />
               );
             })}

@@ -21,6 +21,7 @@ function Archives(props) {
               content={noteItem.content}
               color={noteItem.color}
               imagesrc={noteItem.imagesrc}
+              labels={noteItem.labels}
             />
           );
         })}

@@ -10,13 +10,13 @@ import {
   SEARCH,
 } from "../actions";
 
-const initialMoviesState = {
+const initialState = {
   notes: [],
   archives: [],
   search: []
 };
 
-export default function notes(state = initialMoviesState, action) {
+export default function notes(state = initialState, action) {
   switch (action.type) {
     case CREATE_NOTE:
       return {
