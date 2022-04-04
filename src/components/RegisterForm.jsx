@@ -1,0 +1,134 @@
+import React from "react";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  Text,
+} from "@chakra-ui/react";
+import { MdHighlight } from "react-icons/md";
+import { Formik, Form, useField } from "formik";
+import { Link } from "react-router-dom";
+
+const TextInput = ({ label, ...props }) => {
+  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
+  // which we can spread on <input> and alse replace ErrorMessage entirely.
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <FormControl isInvalid={meta.error && meta.touched} my={5} isRequired>
+        <FormLabel htmlFor={props.id || props.name}>{label}</FormLabel>
+        <Input {...field} {...props} _focus={{ border: "3px solid #f5ba13" }} />
+        <FormErrorMessage>{meta.error}</FormErrorMessage>
+      </FormControl>
+    </>
+  );
+};
+
+export const RegisterForm = () => {
+  return (
+    <Flex
+      flexDir="column"
+      borderRadius="12px"
+      bg="#fff"
+      w="40vw"
+      h="85vh"
+      p={5}
+      justifyContent="center"
+      boxShadow="0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)"
+    >
+      <Flex justifyContent="center" mb={3}>
+        <MdHighlight
+          style={{ display: "inline", marginRight: 15 }}
+          fontSize={"40px"}
+          color="#f5ba13"
+        />
+        <Heading size="lg" color="#f5ba13" mt={2}>
+          Hey There!
+        </Heading>
+      </Flex>
+      <Flex flexDir="column" justifyContent="center">
+        <Formik
+          initialValues={{
+            name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          }}
+          validate={(values) => {
+            const errors = {};
+            if (!values.name) {
+              errors.name = "Name is Required";
+            }
+            if (!values.email) {
+              errors.email = "Email is Required";
+            } else if (
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+            ) {
+              errors.email = "Invalid email address";
+            }
+            if (!values.password) {
+              errors.password = "Password is Required";
+            }
+            if (!values.confirmPassword) {
+              errors.confirmPassword = "Confirm your password";
+            } else if (values.password !== values.confirmPassword) {
+              errors.confirmPassword = "Passwords do not match";
+            }
+            return errors;
+          }}
+          onSubmit={async (values, { setSubmitting }) => {
+            await new Promise((r) => setTimeout(r, 500));
+            setSubmitting(false);
+          }}
+        >
+          <Form>
+            <TextInput
+              label="Name"
+              name="name"
+              type="text"
+              placeholder="Jane"
+            />
+            <TextInput
+              label="Email Address"
+              name="email"
+              type="email"
+              placeholder="jane@formik.com"
+            />
+            <TextInput
+              label="Password"
+              name="password"
+              type="password"
+              placeholder="Password"
+            />
+            <TextInput
+              label="Confirm Password"
+              name="confirmPassword"
+              type="text"
+              placeholder="Confrim Password"
+            />
+            <Flex alignItems="center" flexDir="column">
+              <Button
+                _hover={{ background: "#f5ba13", transform: "scale(1.1)" }}
+                bg="#f5ba13"
+                color="#fff"
+                size="lg"
+              >
+                Register
+              </Button>
+              <Text mt={3} fontWeight="bold">
+                Already have an account?{" "}
+                <Link to="/login" style={{ color: "#f5ba13" }}>
+                  <u>Log in here</u>
+                </Link>
+              </Text>
+            </Flex>
+          </Form>
+        </Formik>
+      </Flex>
+    </Flex>
+  );
+};
