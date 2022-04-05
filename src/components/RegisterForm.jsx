@@ -12,6 +12,8 @@ import {
 import { MdHighlight } from "react-icons/md";
 import { Formik, Form, useField } from "formik";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signup } from "../actions/auth";
 
 const TextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -29,6 +31,7 @@ const TextInput = ({ label, ...props }) => {
 };
 
 export const RegisterForm = () => {
+  const dispatch = useDispatch();
   return (
     <Flex
       flexDir="column"
@@ -81,7 +84,7 @@ export const RegisterForm = () => {
             return errors;
           }}
           onSubmit={async (values, { setSubmitting }) => {
-            await new Promise((r) => setTimeout(r, 500));
+            dispatch(signup(values.name,  values.email, values.password));
             setSubmitting(false);
           }}
         >
@@ -116,6 +119,7 @@ export const RegisterForm = () => {
                 bg="#f5ba13"
                 color="#fff"
                 size="lg"
+                type="submit"
               >
                 Register
               </Button>

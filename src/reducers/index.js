@@ -8,7 +8,7 @@ import {
   EDIT_NOTE,
   UNARCHIVE_NOTE,
   SEARCH,
-} from "../actions";
+} from "../actions/actiontypes";
 
 const initialState = {
   notes: [],

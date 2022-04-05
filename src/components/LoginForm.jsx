@@ -12,6 +12,8 @@ import {
 import { MdHighlight } from "react-icons/md";
 import { Formik, Form, useField } from "formik";
 import { Link } from "react-router-dom";
+import { login } from "../actions/auth";
+import { useDispatch } from "react-redux";
 
 const TextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -29,6 +31,7 @@ const TextInput = ({ label, ...props }) => {
 };
 
 export const LoginForm = () => {
+  const dispatch = useDispatch();
   return (
     <Flex
       flexDir="column"
@@ -71,7 +74,7 @@ export const LoginForm = () => {
             return errors;
           }}
           onSubmit={async (values, { setSubmitting }) => {
-            await new Promise((r) => setTimeout(r, 500));
+            dispatch(login(values.email, values.password));
             setSubmitting(false);
           }}
         >
@@ -94,6 +97,7 @@ export const LoginForm = () => {
                 bg="#f5ba13"
                 color="#fff"
                 size="lg"
+                type="submit"
               >
                 Log in
               </Button>

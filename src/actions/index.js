@@ -1,21 +1,21 @@
-export const ADD_NOTES = "ADD_NOTES";
-export const CREATE_NOTE = "CREATE_NOTE";
-export const DELETE_NOTE = "DELETE_NOTE";
-export const EDIT_NOTE = "EDIT_NOTE";
-export const COPY_NOTE = "COPY_NOTE";
+import {
+  ADD_NOTES,
+  CREATE_NOTE,
+  DELETE_NOTE,
+  EDIT_NOTE,
+  COPY_NOTE,
+  ARCHIVE_NOTE,
+  UNARCHIVE_NOTE,
+  DELETE_ARCHIVE,
+  COPY_ARCHIVE,
+  SEARCH,
+} from "./actiontypes";
 
-export const ARCHIVE_NOTE = "ARCHIVE_NOTE";
-export const UNARCHIVE_NOTE = "UNARCHIVE_NOTE";
-export const DELETE_ARCHIVE = "DELETE_ARCHIVE";
-export const COPY_ARCHIVE = "COPY_ARCHIVE";
-
-export const SEARCH = "SEARCH";
-
-export function addNotes(notes){
-    return{
-        type: ADD_NOTES,
-        notes
-    };
+export function addNotes(notes) {
+  return {
+    type: ADD_NOTES,
+    notes,
+  };
 }
 
 export function createNote(note) {
@@ -32,15 +32,15 @@ export function deleteNote(id) {
   };
 }
 
-export function editNote(newNote, id){
+export function editNote(newNote, id) {
   return {
     type: EDIT_NOTE,
     newNote,
-    id
+    id,
   };
 }
 
-export function copyNote(note){
+export function copyNote(note) {
   return {
     type: COPY_NOTE,
     note,
@@ -80,6 +80,6 @@ export function copyArchive(note) {
 export function search(text) {
   return {
     type: SEARCH,
-    text
+    text,
   };
 }
