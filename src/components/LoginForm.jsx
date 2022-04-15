@@ -73,7 +73,7 @@ export const LoginForm = () => {
             }
             return errors;
           }}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting }) => {
             dispatch(login(values.email, values.password));
             setSubmitting(false);
           }}
@@ -102,7 +102,7 @@ export const LoginForm = () => {
                 Log in
               </Button>
               <Text mt={3} fontWeight="bold">
-               Don't have an account?{" "}
+                Don't have an account?{" "}
                 <Link to="/register" style={{ color: "#f5ba13" }}>
                   <u>Register here</u>
                 </Link>

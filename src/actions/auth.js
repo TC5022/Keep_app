@@ -43,6 +43,7 @@ export function login(email, password) {
         if (data.success) {
         //   dispatch an action to save the user
           localStorage.setItem("token", data.token);
+          localStorage.setItem("user", data.user.name);
           dispatch(loginSuccess(data.user));
           return;
         }

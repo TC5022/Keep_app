@@ -83,7 +83,7 @@ export const RegisterForm = () => {
             }
             return errors;
           }}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting }) => {
             dispatch(signup(values.name,  values.email, values.password));
             setSubmitting(false);
           }}
