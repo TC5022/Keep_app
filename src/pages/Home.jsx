@@ -4,19 +4,23 @@ import CreateArea from '../components/CreateArea';
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { Box, Flex } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from 'react-router-dom';
+import { fetchNotes } from '../actions';
 
 function Home() {
   const user = localStorage.getItem("user");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (user) {
       navigate("/", { replace: true });
+      dispatch(fetchNotes());
     } else {
       navigate("/login", { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, navigate, dispatch]);
     const notes = useSelector((state) => state.notes);
 
     return (

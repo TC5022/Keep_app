@@ -2,5 +2,7 @@ const API_ROOT = "http://localhost:8000/v1";
 
 export const APIUrls = {
   login: () => `${API_ROOT}/user/login`,
-  signup: () => `${API_ROOT}/user/register`
+  signup: () => `${API_ROOT}/user/register`,
+  fetchNotes: () => `${API_ROOT}/`,
+  createNote: () => `${API_ROOT}/note/`,
 };

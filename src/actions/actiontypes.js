@@ -1,8 +1,8 @@
-export const ADD_NOTES = "ADD_NOTES";
-export const CREATE_NOTE = "CREATE_NOTE";
+export const ADD_NOTE = "ADD_NOTES";
 export const DELETE_NOTE = "DELETE_NOTE";
 export const EDIT_NOTE = "EDIT_NOTE";
 export const COPY_NOTE = "COPY_NOTE";
+export const UPDATE_NOTES = "UPDATE_NOTES";
 
 export const ARCHIVE_NOTE = "ARCHIVE_NOTE";
 export const UNARCHIVE_NOTE = "UNARCHIVE_NOTE";

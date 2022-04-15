@@ -2,12 +2,13 @@ import {
   ARCHIVE_NOTE,
   COPY_ARCHIVE,
   COPY_NOTE,
-  CREATE_NOTE,
+  ADD_NOTE,
   DELETE_ARCHIVE,
   DELETE_NOTE,
   EDIT_NOTE,
   UNARCHIVE_NOTE,
   SEARCH,
+  UPDATE_NOTES,
 } from "../actions/actiontypes";
 
 const initialState = {
@@ -18,10 +19,15 @@ const initialState = {
 
 export default function notes(state = initialState, action) {
   switch (action.type) {
-    case CREATE_NOTE:
+    case UPDATE_NOTES:
+    return {
+      ...state,
+      notes: action.notes
+    }
+    case ADD_NOTE:
       return {
         ...state,
-        notes: [action.note, ...state.notes],
+        notes: [...state.notes, action.note],
       };
     case DELETE_NOTE:
       const filteredNotes = state.notes.filter(

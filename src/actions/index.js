@@ -1,6 +1,7 @@
+import { APIUrls } from "../helpers/urls";
+import { getFormBody, getAuthToken } from "../helpers/utils";
 import {
-  ADD_NOTES,
-  CREATE_NOTE,
+  ADD_NOTE,
   DELETE_NOTE,
   EDIT_NOTE,
   COPY_NOTE,
@@ -9,19 +10,60 @@ import {
   DELETE_ARCHIVE,
   COPY_ARCHIVE,
   SEARCH,
+  UPDATE_NOTES,
 } from "./actiontypes";
 
-export function addNotes(notes) {
+export function fetchNotes() {
+  return (dispatch) => {
+    const url = APIUrls.fetchNotes();
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        dispatch(updateNotes(data.notes));
+      });
+  };
+}
+
+export function updateNotes(notes) {
   return {
-    type: ADD_NOTES,
+    type: UPDATE_NOTES,
     notes,
   };
 }
 
-export function createNote(note) {
+export function addNote(note) {
   return {
-    type: CREATE_NOTE,
+    type: ADD_NOTE,
     note,
+  };
+}
+
+export function createNote(note) {
+  const {title, content} = note;
+  return (dispatch) => {
+    const url = APIUrls.createNote();
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+      body: getFormBody({title, content}),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log("data", data);
+        if(data.note){
+          dispatch(addNote(data.note));
+        }  
+      });
   };
 }
 

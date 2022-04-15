@@ -86,21 +86,22 @@ function Note(props) {
   const archives = useSelector((state) => state.archives);
   const { onOpen, isOpen, onClose } = useDisclosure();
 
-  useEffect(() => {
-    const { title, content, color, id, imagesrc, labels } = state;
-    if (color !== props.color || imagesrc !== props.imagesrc || labels !== props.labels) {
-      const newNote = {
-        id: id,
-        title: title,
-        content: content,
-        color: color,
-        imagesrc: imagesrc,
-        labels: labels
-      };
+  // useEffect(() => {
+  //   const { title, content, color, id, imagesrc, labels } = state;
+  //   if (color !== props.color || imagesrc !== props.imagesrc || labels !== props.labels) {
+  //     const newNote = {
+  //       id: id,
+  //       title: title,
+  //       content: content,
+  //       color: color,
+  //       imagesrc: imagesrc,
+  //       labels: labels
+  //     };
+  //     console.log("called");
 
-      dispatch(editNote(newNote, state.id));
-    }
-  }, [state, dispatch, props.color, props.imagesrc, props.labels]);
+  //     dispatch(editNote(newNote, state.id));
+  //   }
+  // }, [state, dispatch, props.color, props.imagesrc, props.labels]);
 
   const colors = [
     "#ffffff",
@@ -190,7 +191,7 @@ function Note(props) {
     >
       {props.imagesrc?.length !== 0 && (
         <SimpleGrid minChildWidth="80px" spacing={2} mb={3}>
-          {props.imagesrc.map((image, index) => (
+          {props.imagesrc?.map((image, index) => (
             <Image key={index} src={image} />
           ))}
         </SimpleGrid>
