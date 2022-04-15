@@ -4,5 +4,6 @@ export const APIUrls = {
   login: () => `${API_ROOT}/user/login`,
   signup: () => `${API_ROOT}/user/register`,
   fetchNotes: () => `${API_ROOT}/`,
-  createNote: () => `${API_ROOT}/note/`,
+  createNote: () => `${API_ROOT}/note/create`,
+  copyNote: () => `${API_ROOT}/note/copy`,
 };

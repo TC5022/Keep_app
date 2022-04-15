@@ -4,7 +4,6 @@ import {
   ADD_NOTE,
   DELETE_NOTE,
   EDIT_NOTE,
-  COPY_NOTE,
   ARCHIVE_NOTE,
   UNARCHIVE_NOTE,
   DELETE_ARCHIVE,
@@ -67,6 +66,29 @@ export function createNote(note) {
   };
 }
 
+export function copyNote(noteId) {
+  return (dispatch) => {
+    const url = APIUrls.copyNote();
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+      body: getFormBody({noteId}),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log("data", data);
+        if (data.note) {
+          dispatch(addNote(data.note));
+        }else{
+          console.log(data.message);
+        }
+      });
+  };
+}
+
 export function deleteNote(id) {
   return {
     type: DELETE_NOTE,
@@ -79,13 +101,6 @@ export function editNote(newNote, id) {
     type: EDIT_NOTE,
     newNote,
     id,
-  };
-}
-
-export function copyNote(note) {
-  return {
-    type: COPY_NOTE,
-    note,
   };
 }
 

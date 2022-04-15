@@ -27,7 +27,7 @@ export default function notes(state = initialState, action) {
     case ADD_NOTE:
       return {
         ...state,
-        notes: [...state.notes, action.note],
+        notes: [action.note, ...state.notes],
       };
     case DELETE_NOTE:
       const filteredNotes = state.notes.filter(

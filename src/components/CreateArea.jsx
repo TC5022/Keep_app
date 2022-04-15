@@ -10,11 +10,10 @@ function CreateArea(props) {
   const notes = useSelector((state) => state.notes);
   const [isExpanded, setIsExpanded] = useState(false);
   const [note, setNote] = useState({
-    id: 0,
     title: "hi",
     content: "hello",
     imagesrc: [],
-    color: "",
+    color: "#fffff",
     labels: [] 
   });
 

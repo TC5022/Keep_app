@@ -22,6 +22,7 @@ function Home() {
     }
   }, [user, navigate, dispatch]);
     const notes = useSelector((state) => state.notes);
+    console.log(notes);
 
     return (
       <>
@@ -37,9 +38,8 @@ function Home() {
                     return (
                       <Note
                         key={index}
-                        id={index}
+                        id={noteItem._id}
                         note={noteItem}
-                        index={noteItem.id}
                         title={noteItem.title}
                         content={noteItem.content}
                         color={noteItem.color}

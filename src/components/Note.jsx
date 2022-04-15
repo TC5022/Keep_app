@@ -56,7 +56,7 @@ import { NoteButton } from "./NoteButton";
 
 function Note(props) {
   const [state, setState] = useState({
-    id: props.index,
+    id: props.id,
     title: props.title,
     content: props.content,
     color: props.color,
@@ -65,22 +65,22 @@ function Note(props) {
     editMode: false,
   });
 
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
   const [labelInput, setLabelInput] = useState("");
 
-  useEffect(() => {
-    if (state.id !== props.index) {
-      setState({
-        ...state,
-        id: props.index,
-        title: props.title,
-        content: props.content,
-        color: props.color,
-        imagesrc: props.imagesrc,
-        labels: props.labels
-      });
-    }
-  }, [state, props.title, props.content, props]);
+  // useEffect(() => {
+  //   if (state.id !== props.index) {
+  //     setState({
+  //       ...state,
+  //       id: props.index,
+  //       title: props.title,
+  //       content: props.content,
+  //       color: props.color,
+  //       imagesrc: props.imagesrc,
+  //       labels: props.labels
+  //     });
+  //   }
+  // }, [state, props.title, props.content, props]);
 
   const dispatch = useDispatch();
   const archives = useSelector((state) => state.archives);
@@ -186,8 +186,8 @@ function Note(props) {
         backgroundColor: state.color,
         borderColor: state.color || "#e0e0e0",
       }}
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
+      // onMouseEnter={() => setVisible(true)}
+      // onMouseLeave={() => setVisible(false)}
     >
       {props.imagesrc?.length !== 0 && (
         <SimpleGrid minChildWidth="80px" spacing={2} mb={3}>
@@ -387,7 +387,7 @@ function Note(props) {
           />
         ) : (
           <NoteButton
-            onChange={() => dispatch(copyNote(props.note))}
+            onChange={() => dispatch(copyNote(props.id))}
             icon={<AiOutlineCopy fontSize={"20px"} />}
           />
         )}
