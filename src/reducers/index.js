@@ -31,7 +31,7 @@ export default function notes(state = initialState, action) {
       };
     case DELETE_NOTE:
       const filteredNotes = state.notes.filter(
-        (note, index) => index !== action.id
+        (note) => note._id !== action.id
       );
       return { ...state, notes: filteredNotes };
     case EDIT_NOTE:

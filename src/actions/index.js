@@ -58,7 +58,6 @@ export function createNote(note) {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("data", data);
         if(data.note){
           dispatch(addNote(data.note));
         }  
@@ -79,7 +78,6 @@ export function copyNote(noteId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("data", data);
         if (data.note) {
           dispatch(addNote(data.note));
         }else{
@@ -89,7 +87,29 @@ export function copyNote(noteId) {
   };
 }
 
-export function deleteNote(id) {
+export function deleteNote(noteId) {
+  return (dispatch) => {
+    const url = APIUrls.deleteNote();
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+      body: getFormBody({ noteId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(deleteSuccess(noteId));
+        } else {
+          console.log(data.message);
+        }
+      });
+  };
+}
+
+export function deleteSuccess(id) {
   return {
     type: DELETE_NOTE,
     id,
