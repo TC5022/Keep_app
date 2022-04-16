@@ -7,5 +7,5 @@ export const APIUrls = {
   createNote: () => `${API_ROOT}/note/create`,
   copyNote: () => `${API_ROOT}/note/copy`,
   deleteNote: () => `${API_ROOT}/note/delete`,
-  editNote: () => `${API_ROOT}/note/edit`,
+  updateNote: (query) => `${API_ROOT}/note/update/${query}`,
 };

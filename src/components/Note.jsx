@@ -44,7 +44,9 @@ import {
 
 //actions
 import {
+  addImage,
   archiveNote,
+  changeColor,
   copyArchive,
   copyNote,
   deleteArchive,
@@ -63,6 +65,7 @@ function Note(props) {
     imagesrc: props.imagesrc,
     labels: props.labels,
     editMode: false,
+    currImage: "",
   });
 
   // const [visible, setVisible] = useState(false);
@@ -86,22 +89,30 @@ function Note(props) {
   const archives = useSelector((state) => state.archives);
   const { onOpen, isOpen, onClose } = useDisclosure();
 
-  // useEffect(() => {
-  //   const { title, content, color, id, imagesrc, labels } = state;
-  //   if (color !== props.color || imagesrc !== props.imagesrc || labels !== props.labels) {
-  //     const newNote = {
-  //       id: id,
-  //       title: title,
-  //       content: content,
-  //       color: color,
-  //       imagesrc: imagesrc,
-  //       labels: labels
-  //     };
-  //     console.log("called");
+  useEffect(() => {
+    const color = state.color;
+    const imagesrc = state.imagesrc;
 
-  //     dispatch(editNote(newNote, state.id));
-  //   }
-  // }, [state, dispatch, props.color, props.imagesrc, props.labels]);
+    if (state.id === props.id) {
+      if (color !== props.color) {
+        dispatch(changeColor(color, props.id));
+      }
+
+      if (imagesrc.length !== props.imagesrc.length) {
+        dispatch(addImage(state.currImage, props.id));
+      }
+    }
+  }, [
+    state.color,
+    state.imagesrc,
+    state.currImage,
+    dispatch,
+    props.color,
+    props.imagesrc,
+    // props.labels,
+    props.id,
+    state.id,
+  ]);
 
   const colors = [
     "#ffffff",
@@ -131,6 +142,7 @@ function Note(props) {
       ? setState({
           ...state,
           imagesrc: [...state.imagesrc, val],
+          currImage: val
         })
       : setState({
           ...state,
@@ -159,7 +171,7 @@ function Note(props) {
   }
 
   function handleSave() {
-    const { title, content, color, id, imagesrc, labels } = state;
+    const { title, content, id } = state;
     dispatch(editNote(title, content , id));
     state.editMode === true && handleChange("editMode", false);
   }
@@ -181,9 +193,9 @@ function Note(props) {
       // onMouseEnter={() => setVisible(true)}
       // onMouseLeave={() => setVisible(false)}
     >
-      {props.imagesrc?.length !== 0 && (
+      {state.imagesrc.length !== 0 && (
         <SimpleGrid minChildWidth="80px" spacing={2} mb={3}>
-          {props.imagesrc?.map((image, index) => (
+          {state.imagesrc?.map((image, index) => (
             <Image key={index} src={image} />
           ))}
         </SimpleGrid>

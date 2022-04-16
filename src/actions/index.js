@@ -89,7 +89,7 @@ export function copyNote(noteId) {
 
 export function editNote(title, content, noteId) {
   return (dispatch) => {
-    const url = APIUrls.editNote();
+    const url = APIUrls.updateNote("edit");
     fetch(url, {
       method: "POST",
       headers: {
@@ -97,6 +97,50 @@ export function editNote(title, content, noteId) {
         Authorization: `Bearer ${getAuthToken()}`,
       },
       body: getFormBody({noteId, title, content }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.note) {
+          dispatch(editSuccess(data.note, noteId));
+        } else {
+          console.log(data.message);
+        }
+      });
+  };
+}
+
+export function changeColor(color, noteId) {
+  return (dispatch) => {
+    const url = APIUrls.updateNote("color");
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+      body: getFormBody({ noteId, color }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.note) {
+          dispatch(editSuccess(data.note, noteId));
+        } else {
+          console.log(data.message);
+        }
+      });
+  };
+}
+
+export function addImage(imageSrc, noteId) {
+  return (dispatch) => {
+    const url = APIUrls.updateNote("image");
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+      body: getFormBody({ noteId, imageSrc }),
     })
       .then((response) => response.json())
       .then((data) => {

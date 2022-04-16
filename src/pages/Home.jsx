@@ -43,7 +43,7 @@ function Home() {
                         title={noteItem.title}
                         content={noteItem.content}
                         color={noteItem.color}
-                        imagesrc={noteItem.imagesrc}
+                        imagesrc={noteItem.imageSrc}
                         labels={noteItem.labels}
                       />
                     );
