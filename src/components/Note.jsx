@@ -68,19 +68,19 @@ function Note(props) {
   // const [visible, setVisible] = useState(false);
   const [labelInput, setLabelInput] = useState("");
 
-  // useEffect(() => {
-  //   if (state.id !== props.index) {
-  //     setState({
-  //       ...state,
-  //       id: props.index,
-  //       title: props.title,
-  //       content: props.content,
-  //       color: props.color,
-  //       imagesrc: props.imagesrc,
-  //       labels: props.labels
-  //     });
-  //   }
-  // }, [state, props.title, props.content, props]);
+  useEffect(() => {
+    if (state.id !== props.id) {
+      setState({
+        ...state,
+        id: props.id,
+        title: props.title,
+        content: props.content,
+        color: props.color,
+        imagesrc: props.imagesrc,
+        labels: props.labels
+      });
+    }
+  }, [state, props.title, props.content, props]);
 
   const dispatch = useDispatch();
   const archives = useSelector((state) => state.archives);
@@ -160,15 +160,7 @@ function Note(props) {
 
   function handleSave() {
     const { title, content, color, id, imagesrc, labels } = state;
-    const newNote = {
-      id: id,
-      title: title,
-      content: content,
-      color: color,
-      imagesrc: imagesrc,
-      labels: labels
-    };
-    dispatch(editNote(newNote, state.id));
+    dispatch(editNote(title, content , id));
     state.editMode === true && handleChange("editMode", false);
   }
 
@@ -178,7 +170,7 @@ function Note(props) {
       p={5}
       m="16px"
       border="1px solid"
-      _hover={{boxShadow: "0 2px 5px #ccc"}}
+      _hover={{ boxShadow: "0 2px 5px #ccc" }}
       w="20vw"
       bg="#fff"
       float="left"
@@ -231,7 +223,10 @@ function Note(props) {
             color="#00000"
           >
             <TagLabel>{label}</TagLabel>
-            <TagCloseButton _focus={{outline: "none"}} onClick={() => deleteLabel(label)} />
+            <TagCloseButton
+              _focus={{ outline: "none" }}
+              onClick={() => deleteLabel(label)}
+            />
           </Tag>
         ))}
       {/* <Badge

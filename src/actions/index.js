@@ -87,6 +87,36 @@ export function copyNote(noteId) {
   };
 }
 
+export function editNote(title, content, noteId) {
+  return (dispatch) => {
+    const url = APIUrls.editNote();
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+      body: getFormBody({noteId, title, content }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.note) {
+          dispatch(editSuccess(data.note, noteId));
+        } else {
+          console.log(data.message);
+        }
+      });
+  };
+}
+
+export function editSuccess(newNote, id) {
+  return {
+    type: EDIT_NOTE,
+    newNote,
+    id,
+  };
+}
+
 export function deleteNote(noteId) {
   return (dispatch) => {
     const url = APIUrls.deleteNote();
@@ -112,14 +142,6 @@ export function deleteNote(noteId) {
 export function deleteSuccess(id) {
   return {
     type: DELETE_NOTE,
-    id,
-  };
-}
-
-export function editNote(newNote, id) {
-  return {
-    type: EDIT_NOTE,
-    newNote,
     id,
   };
 }

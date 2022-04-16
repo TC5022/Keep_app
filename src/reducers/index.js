@@ -36,7 +36,7 @@ export default function notes(state = initialState, action) {
       return { ...state, notes: filteredNotes };
     case EDIT_NOTE:
       const updatedNotes = [...state.notes];
-      const index = updatedNotes.findIndex(note => note.id === action.id);
+      const index = updatedNotes.findIndex(note => note._id === action.id);
       updatedNotes[index] = action.newNote;
 
       return {
