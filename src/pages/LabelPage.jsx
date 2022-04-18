@@ -3,20 +3,21 @@ import Note from "../components/Note";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { Box, Flex } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function Archives(props) {
+function LabelPage() {
   const user = localStorage.getItem("user");
   const navigate = useNavigate();
+  const location = useLocation();
+
   useEffect(() => {
-    if (user) {
-      navigate("/archives", { replace: true });
-    } else {
+    if (!user) {
       navigate("/login", { replace: true });
     }
-  }, [user, navigate]);
-  const archives = useSelector((state) => state.notes.archives);
+  }, [user, navigate, location.pathname]);
+  
+  const labelNotes = location.state;
 
   return (
     <Flex maxW="100vw" flexDir="column">
@@ -24,18 +25,17 @@ function Archives(props) {
       <Flex>
         <Sidebar />
         <Box pl={10}>
-          {archives &&
-            archives.map((noteItem, index) => {
+          {labelNotes &&
+            labelNotes.map((noteItem, index) => {
               return (
                 <Note
                   key={index}
-                  id={index}
+                  id={noteItem._id}
                   note={noteItem}
-                  index={noteItem.id}
                   title={noteItem.title}
                   content={noteItem.content}
                   color={noteItem.color}
-                  imagesrc={noteItem.imagesrc}
+                  imagesrc={noteItem.imageSrc}
                   labels={noteItem.labels}
                 />
               );
@@ -46,4 +46,4 @@ function Archives(props) {
   );
 }
 
-export default Archives;
+export default LabelPage;

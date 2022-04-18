@@ -3,10 +3,16 @@ import React from "react";
 import { Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-export const NavLinks = ({ link, icon, text, isActive }) => {
+export const NavLinks = ({ link, icon, text, isActive, linkState }) => {
+  // console.log(linkState);
   return (
     <>
-      <Link to={link}>
+      <Link
+        to={{
+          pathname: link,
+        }}
+        state={linkState}
+      >
         <Button
           w="full"
           size="lg"

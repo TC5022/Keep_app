@@ -55,6 +55,7 @@ import {
   unarchiveNote,
 } from "../actions";
 import { NoteButton } from "./NoteButton";
+import { createLabel } from "../actions/label";
 
 function Note(props) {
   const [state, setState] = useState({
@@ -86,7 +87,7 @@ function Note(props) {
   }, [state, props.title, props.content, props]);
 
   const dispatch = useDispatch();
-  const archives = useSelector((state) => state.archives);
+  const archives = useSelector((state) => state.notes.archives);
   const { onOpen, isOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -150,15 +151,6 @@ function Note(props) {
         });
   }
 
-  function saveLabel(){
-    setState({
-      ...state,
-      labels: [...state.labels, labelInput]
-    });
-
-    setLabelInput("");
-  }
-
   function deleteLabel(deleteLabel){
     const filteredLabels = state.labels.filter(
       (label) => label !== deleteLabel
@@ -193,7 +185,7 @@ function Note(props) {
       // onMouseEnter={() => setVisible(true)}
       // onMouseLeave={() => setVisible(false)}
     >
-      {state.imagesrc.length !== 0 && (
+      {state.imagesrc?.length !== 0 && (
         <SimpleGrid minChildWidth="80px" spacing={2} mb={3}>
           {state.imagesrc?.map((image, index) => (
             <Image key={index} src={image} />
@@ -208,7 +200,7 @@ function Note(props) {
         ></Input>
       ) : (
         <Heading size="md" fontFamily="body" my={1}>
-          {props.title}
+          {state.title}
         </Heading>
       )}
 
@@ -220,12 +212,12 @@ function Note(props) {
         ></Input>
       ) : (
         <Text fontSize="2xl" mb={1}>
-          {props.content}
+          {state.content}
         </Text>
       )}
 
-      {props.labels?.length !== 0 &&
-        props.labels?.map((label, index) => (
+      {state.labels?.length !== 0 &&
+        state.labels?.map((label, index) => (
           <Tag
             borderRadius="full"
             size="md"
@@ -234,7 +226,7 @@ function Note(props) {
             background="rgba(0,0,0,0.08)"
             color="#00000"
           >
-            <TagLabel>{label}</TagLabel>
+            <TagLabel>{label.name}</TagLabel>
             <TagCloseButton
               _focus={{ outline: "none" }}
               onClick={() => deleteLabel(label)}
@@ -322,7 +314,11 @@ function Note(props) {
               </InputGroup>
             </PopoverBody>
             <PopoverFooter d="flex" _hover={{ bg: "#E2E8F0" }} color="#00000">
-              <Flex role="button" width="100%" onClick={() => saveLabel()}>
+              <Flex
+                role="button"
+                width="100%"
+                onClick={() => dispatch(createLabel(props.id, labelInput))}
+              >
                 <AiOutlinePlus
                   fontSize={"1.25rem"}
                   style={{ marginRight: "12px" }}

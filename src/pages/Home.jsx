@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import Note from "../components/Note";
-import CreateArea from '../components/CreateArea';
+import CreateArea from "../components/CreateArea";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { Box, Flex } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useNavigate } from 'react-router-dom';
-import { fetchNotes } from '../actions';
+import { Outlet, useNavigate } from "react-router-dom";
 
 function Home() {
   const user = localStorage.getItem("user");
@@ -16,45 +15,44 @@ function Home() {
   useEffect(() => {
     if (user) {
       navigate("/", { replace: true });
-      dispatch(fetchNotes());
     } else {
       navigate("/login", { replace: true });
     }
   }, [user, navigate, dispatch]);
-    const notes = useSelector((state) => state.notes);
-    console.log(notes);
 
-    return (
-      <>
-        <Flex maxW="100vw" flexDir="column">
-          <Header />
-          <Flex>
-            <Sidebar />
-            <Box w="full">
-              <CreateArea />
-              <Box pl={10}>
-                {notes &&
-                  notes.map((noteItem, index) => {
-                    return (
-                      <Note
-                        key={index}
-                        id={noteItem._id}
-                        note={noteItem}
-                        title={noteItem.title}
-                        content={noteItem.content}
-                        color={noteItem.color}
-                        imagesrc={noteItem.imageSrc}
-                        labels={noteItem.labels}
-                      />
-                    );
-                  })}
-              </Box>
+  const notes = useSelector((state) => state.notes.notes);
+
+  return (
+    <>
+      <Flex maxW="100vw" flexDir="column">
+        <Header />
+        <Flex>
+          <Sidebar />
+          <Box w="full">
+            <CreateArea />
+            <Box pl={10}>
+              {notes &&
+                notes?.map((noteItem, index) => {
+                  return (
+                    <Note
+                      key={index}
+                      id={noteItem._id}
+                      note={noteItem}
+                      title={noteItem.title}
+                      content={noteItem.content}
+                      color={noteItem.color}
+                      imagesrc={noteItem.imageSrc}
+                      labels={noteItem.labels}
+                    />
+                  );
+                })}
             </Box>
-          </Flex>
+          </Box>
         </Flex>
-        <Outlet />
-      </>
-    );
+      </Flex>
+      <Outlet />
+    </>
+  );
 }
 
 export default Home;

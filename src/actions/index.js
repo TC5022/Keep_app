@@ -11,6 +11,7 @@ import {
   SEARCH,
   UPDATE_NOTES,
 } from "./actiontypes";
+import { editLabelNote } from "./label";
 
 export function fetchNotes() {
   return (dispatch) => {
@@ -102,6 +103,10 @@ export function editNote(title, content, noteId) {
       .then((data) => {
         if (data.note) {
           dispatch(editSuccess(data.note, noteId));
+         const labelArrayLength = data.note.labels.length;
+         for (let a = 0; a < labelArrayLength; a++) {
+           dispatch(editLabelNote(data.note.labels[a]._id, noteId, data.note));
+         }
         } else {
           console.log(data.message);
         }
@@ -124,6 +129,12 @@ export function changeColor(color, noteId) {
       .then((data) => {
         if (data.note) {
           dispatch(editSuccess(data.note, noteId));
+           const labelArrayLength = data.note.labels.length;
+           for (let a = 0; a < labelArrayLength; a++) {
+             dispatch(
+               editLabelNote(data.note.labels[a]._id, noteId, data.note)
+             );
+           }
         } else {
           console.log(data.message);
         }
@@ -146,6 +157,10 @@ export function addImage(imageSrc, noteId) {
       .then((data) => {
         if (data.note) {
           dispatch(editSuccess(data.note, noteId));
+          const labelArrayLength = data.note.labels.length;
+          for (let a = 0; a < labelArrayLength; a++) {
+            dispatch(editLabelNote(data.note.labels[a]._id, noteId, data.note));
+          }
         } else {
           console.log(data.message);
         }

@@ -11,6 +11,11 @@ export const COPY_ARCHIVE = "COPY_ARCHIVE";
 
 export const SEARCH = "SEARCH";
 
+//label action types
+export const UPDATE_LABELS = "UPDATE_LABELS";
+export const ADD_LABEL = "ADD_LABEL";
+export const EDIT_LABEL_NOTE = "EDIT_LABEL_NOTE";
+
 //login action types
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';

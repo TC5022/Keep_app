@@ -8,4 +8,6 @@ export const APIUrls = {
   copyNote: () => `${API_ROOT}/note/copy`,
   deleteNote: () => `${API_ROOT}/note/delete`,
   updateNote: (query) => `${API_ROOT}/note/update/${query}`,
+  createLabel: () => `${API_ROOT}/labels/create`,
+  fetchLabels: () => `${API_ROOT}/labels/`,
 };
