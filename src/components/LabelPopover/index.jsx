@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Checkbox,
   Flex,
   IconButton,
   Input,
@@ -15,13 +16,21 @@ import {
 
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdNewLabel, MdOutlineSearch } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { createLabel } from "../../actions/label";
+import { useDispatch, useSelector } from "react-redux";
+import { addLabelToNote, createLabel } from "../../actions/label";
 
 export function LabelPopover(props) {
   const [labelInput, setLabelInput] = useState("");
   const dispatch = useDispatch();
 
+  const labels = useSelector((state) => state.labels);
+
+  const isNoteLabel = (labelName) => {
+    const index = props.note.labels.findIndex(
+      (label) => label.name === labelName
+    );
+    return index === -1 ? false : true;
+  }
   const handlecreate = () => {
     dispatch(createLabel(props.id, labelInput));
     setLabelInput("");
@@ -63,13 +72,23 @@ export function LabelPopover(props) {
               }
             />
           </InputGroup>
+          <Flex direction="column">
+            {labels.map((label, index) => {
+              return (
+                <Checkbox
+                  defaultChecked={isNoteLabel(label.name)}
+                  isDisabled={isNoteLabel(label.name)}
+                  key={index}
+                  onChange={()=>dispatch(addLabelToNote(props.id, label._id))}
+                >
+                  {label.name}
+                </Checkbox>
+              );
+            })}
+          </Flex>
         </PopoverBody>
         <PopoverFooter d="flex" _hover={{ bg: "#E2E8F0" }} color="#00000">
-          <Flex
-            role="button"
-            width="100%"
-            onClick={() => handlecreate()}
-          >
+          <Flex role="button" width="100%" onClick={() => handlecreate()}>
             <AiOutlinePlus
               fontSize={"1.25rem"}
               style={{ marginRight: "12px" }}

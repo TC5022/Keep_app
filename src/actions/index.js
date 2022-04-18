@@ -7,7 +7,7 @@ import {
   SEARCH,
   UPDATE_NOTES,
 } from "./actiontypes";
-import { editLabelNote } from "./label";
+import { editLabelNote, removeNoteFromLabel } from "./label";
 
 export function fetchNotes() {
   return (dispatch) => {
@@ -185,6 +185,10 @@ export function deleteNote(noteId) {
       .then((data) => {
         if (data.success) {
           dispatch(deleteSuccess(noteId));
+          const labelArrayLength = data.labels.length;
+          for (let a = 0; a < labelArrayLength; a++) {
+            dispatch(removeNoteFromLabel(data.labels[a], noteId));
+          }
         } else {
           console.log(data.message);
         }

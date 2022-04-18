@@ -3,7 +3,7 @@ import Note from "../components/Note";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { Box, Flex } from "@chakra-ui/react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function LabelPage() {
@@ -16,8 +16,13 @@ function LabelPage() {
       navigate("/login", { replace: true });
     }
   }, [user, navigate, location.pathname]);
-  
-  const labelNotes = location.state;
+
+  let labelNotes = []
+
+  const labelId = location.state;
+  const labels = useSelector((state) => state.labels);
+  const labelIndex = labels.findIndex((label) => label._id === labelId);
+  labelNotes = labelIndex !== -1 && labels[labelIndex].notes;
 
   return (
     <Flex maxW="100vw" flexDir="column">
@@ -26,7 +31,7 @@ function LabelPage() {
         <Sidebar />
         <Box pl={10}>
           {labelNotes &&
-            labelNotes.map((noteItem, index) => {
+            labelNotes?.map((noteItem, index) => {
               return (
                 <Note
                   key={index}

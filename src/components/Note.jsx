@@ -237,7 +237,7 @@ function Note(props) {
         />
         <Canvas isOpen={isOpen} onClose={onClose} handleChange={handleChange} />
 
-        <LabelPopover id={props.id} />
+        <LabelPopover id={props.id} note={props.note} />
 
         {/* handles background change for the note */}
         <Popover>

@@ -10,6 +10,8 @@ export const SEARCH = "SEARCH";
 export const UPDATE_LABELS = "UPDATE_LABELS";
 export const ADD_LABEL = "ADD_LABEL";
 export const EDIT_LABEL_NOTE = "EDIT_LABEL_NOTE";
+export const ADD_NOTE_TO_LABEL = "ADD_NOTE_TO_LABEL";
+export const REMOVE_NOTE_FROM_LABEL = "REMOVE_NOTE_FROM_LABEL";
 
 //login action types
 export const LOGIN_START = 'LOGIN_START';

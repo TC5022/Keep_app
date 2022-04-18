@@ -43,7 +43,7 @@ function Sidebar() {
               key={index}
               link={`/labels/${label.name}`}
               text={label.name}
-              linkState={label.notes}
+              linkState={label._id}
               icon={<MdLabelOutline style={styles} />}
               isActive={location.pathname === `/labels/${label.name}`}
             />

@@ -10,4 +10,5 @@ export const APIUrls = {
   updateNote: (query) => `${API_ROOT}/note/update/${query}`,
   createLabel: () => `${API_ROOT}/labels/create`,
   fetchLabels: () => `${API_ROOT}/labels/`,
+  addLabelToNote: () => `${API_ROOT}/labels/addLabel`,
 };

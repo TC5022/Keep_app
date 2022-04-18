@@ -4,24 +4,21 @@ import CreateArea from "../components/CreateArea";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { Box, Flex } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
 function Home() {
   const user = localStorage.getItem("user");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user) {
-      navigate("/", { replace: true });
-    } else {
+    if (!user) {
       navigate("/login", { replace: true });
     }
-  }, [user, navigate, dispatch]);
+  }, [user, navigate]);
 
   const notes = useSelector((state) => state.notes.notes);
-
+  console.log("re");
   return (
     <>
       <Flex maxW="100vw" flexDir="column">
