@@ -31,15 +31,12 @@ import {
   AiOutlineEdit,
   AiOutlineSave,
   AiOutlineCopy,
-  AiOutlinePlus,
 } from "react-icons/ai";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import {
   MdOutlineArchive,
   MdOutlineUnarchive,
   MdOutlineDraw,
-  MdNewLabel,
-  MdOutlineSearch,
 } from "react-icons/md";
 
 //actions
@@ -55,9 +52,11 @@ import {
   unarchiveNote,
 } from "../actions";
 import { NoteButton } from "./NoteButton";
-import { createLabel } from "../actions/label";
+// import { createLabel } from "../actions/label";
+import { LabelPopover } from "./LabelPopover";
 
 function Note(props) {
+
   const [state, setState] = useState({
     id: props.id,
     title: props.title,
@@ -70,7 +69,6 @@ function Note(props) {
   });
 
   // const [visible, setVisible] = useState(false);
-  const [labelInput, setLabelInput] = useState("");
 
   useEffect(() => {
     if (state.id !== props.id) {
@@ -81,10 +79,10 @@ function Note(props) {
         content: props.content,
         color: props.color,
         imagesrc: props.imagesrc,
-        labels: props.labels
+        labels: props.labels,
       });
     }
-  }, [state, props.title, props.content, props]);
+  }, [state, props]);
 
   const dispatch = useDispatch();
   const archives = useSelector((state) => state.notes.archives);
@@ -99,7 +97,7 @@ function Note(props) {
         dispatch(changeColor(color, props.id));
       }
 
-      if (imagesrc.length !== props.imagesrc.length) {
+      if (imagesrc?.length !== props.imagesrc?.length) {
         dispatch(addImage(state.currImage, props.id));
       }
     }
@@ -143,7 +141,7 @@ function Note(props) {
       ? setState({
           ...state,
           imagesrc: [...state.imagesrc, val],
-          currImage: val
+          currImage: val,
         })
       : setState({
           ...state,
@@ -216,8 +214,8 @@ function Note(props) {
         </Text>
       )}
 
-      {state.labels?.length !== 0 &&
-        state.labels?.map((label, index) => (
+      {props.labels?.length !== 0 &&
+        props.labels?.map((label, index) => (
           <Tag
             borderRadius="full"
             size="md"
@@ -233,20 +231,6 @@ function Note(props) {
             />
           </Tag>
         ))}
-      {/* <Badge
-            key={index}
-            borderRadius="12px"
-            textTransform="none"
-            py={1}
-            px={2}
-            minW={14}
-            textAlign="center"
-            
-            fontSize="sm"
-            my={3}
-          >
-            {label}
-          </Badge> */}
 
       <Flex
         flexDir="row"
@@ -276,58 +260,7 @@ function Note(props) {
         />
         <Canvas isOpen={isOpen} onClose={onClose} handleChange={handleChange} />
 
-        <Popover>
-          <PopoverTrigger>
-            <IconButton
-              _hover={{ bg: "rgba(95,99,104,0.157)" }}
-              _focus={{ bg: "none", outline: "none" }}
-              bg="none"
-              borderRadius="full"
-              icon={<MdNewLabel fontSize={"20px"} />}
-            />
-          </PopoverTrigger>
-          <PopoverContent
-            _focus={{ outline: "none" }}
-            borderRadius="2px"
-            boxShadow="0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%)"
-            w="300px"
-          >
-            <PopoverHeader fontWeight="bold" border="0" pt={4}>
-              Label note
-            </PopoverHeader>
-            <PopoverBody>
-              <InputGroup>
-                <Input
-                  placeholder="Enter label name"
-                  border="none"
-                  px={0}
-                  _focus={{ border: "none", boxShadow: "none" }}
-                  onChange={(e) => setLabelInput(e.target.value)}
-                  value={labelInput}
-                />
-                <InputRightElement
-                  pointerEvents="none"
-                  children={
-                    <MdOutlineSearch color="#9e9e9e" fontSize={"1.25rem"} />
-                  }
-                />
-              </InputGroup>
-            </PopoverBody>
-            <PopoverFooter d="flex" _hover={{ bg: "#E2E8F0" }} color="#00000">
-              <Flex
-                role="button"
-                width="100%"
-                onClick={() => dispatch(createLabel(props.id, labelInput))}
-              >
-                <AiOutlinePlus
-                  fontSize={"1.25rem"}
-                  style={{ marginRight: "12px" }}
-                />
-                Create
-              </Flex>
-            </PopoverFooter>
-          </PopoverContent>
-        </Popover>
+        <LabelPopover id={props.id} />
 
         {/* handles background change for the note */}
         <Popover>

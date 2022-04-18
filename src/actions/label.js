@@ -19,6 +19,12 @@ export function createLabel(noteId, labelName) {
         if (data.label) {
           dispatch(editSuccess(data.note, noteId));
           dispatch(addLabel(data.label));
+           const labelArrayLength = data.note.labels.length;
+           for (let a = 0; a < labelArrayLength; a++) {
+             dispatch(
+               editLabelNote(data.note.labels[a]._id, noteId, data.note)
+             );
+           }
         } else {
           console.log(data.message);
         }
