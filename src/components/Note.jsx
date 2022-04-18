@@ -14,15 +14,11 @@ import {
   Input,
   useDisclosure,
   Image,
-  PopoverHeader,
-  PopoverFooter,
-  InputRightElement,
-  InputGroup,
   Tag,
   TagLabel,
-  TagCloseButton
+  TagCloseButton,
 } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Canvas } from "./Canvas/Canvas";
 
 //icons
@@ -33,30 +29,20 @@ import {
   AiOutlineCopy,
 } from "react-icons/ai";
 import { IoColorPaletteOutline } from "react-icons/io5";
-import {
-  MdOutlineArchive,
-  MdOutlineUnarchive,
-  MdOutlineDraw,
-} from "react-icons/md";
+import { MdOutlineDraw } from "react-icons/md";
 
 //actions
 import {
   addImage,
-  archiveNote,
   changeColor,
-  copyArchive,
   copyNote,
-  deleteArchive,
   deleteNote,
   editNote,
-  unarchiveNote,
 } from "../actions";
 import { NoteButton } from "./NoteButton";
-// import { createLabel } from "../actions/label";
 import { LabelPopover } from "./LabelPopover";
 
 function Note(props) {
-
   const [state, setState] = useState({
     id: props.id,
     title: props.title,
@@ -85,7 +71,6 @@ function Note(props) {
   }, [state, props]);
 
   const dispatch = useDispatch();
-  const archives = useSelector((state) => state.notes.archives);
   const { onOpen, isOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -128,14 +113,6 @@ function Note(props) {
     "#e8eaed",
   ];
 
-  function isArchive(note) {
-    const index = archives.indexOf(note);
-    if (index !== -1) {
-      return true;
-    }
-    return false;
-  }
-
   function handleChange(fieldname, val) {
     fieldname === "imagesrc"
       ? setState({
@@ -149,20 +126,20 @@ function Note(props) {
         });
   }
 
-  function deleteLabel(deleteLabel){
+  function deleteLabel(deleteLabel) {
     const filteredLabels = state.labels.filter(
       (label) => label !== deleteLabel
     );
 
     setState({
       ...state,
-      labels: filteredLabels
-    })
+      labels: filteredLabels,
+    });
   }
 
   function handleSave() {
     const { title, content, id } = state;
-    dispatch(editNote(title, content , id));
+    dispatch(editNote(title, content, id));
     state.editMode === true && handleChange("editMode", false);
   }
 
@@ -304,41 +281,15 @@ function Note(props) {
           </PopoverContent>
         </Popover>
 
-        {isArchive(props.note) ? (
-          <NoteButton
-            onChange={() => dispatch(unarchiveNote(props.note, props.id))}
-            icon={<MdOutlineUnarchive fontSize={"20px"} />}
-          />
-        ) : (
-          <NoteButton
-            onChange={() => dispatch(archiveNote(props.note, props.id))}
-            icon={<MdOutlineArchive fontSize={"20px"} />}
-          />
-        )}
+        <NoteButton
+          onChange={() => dispatch(copyNote(props.id))}
+          icon={<AiOutlineCopy fontSize={"20px"} />}
+        />
 
-        {isArchive(props.note) ? (
-          <NoteButton
-            onChange={() => dispatch(copyArchive(props.note))}
-            icon={<AiOutlineCopy fontSize={"20px"} />}
-          />
-        ) : (
-          <NoteButton
-            onChange={() => dispatch(copyNote(props.id))}
-            icon={<AiOutlineCopy fontSize={"20px"} />}
-          />
-        )}
-
-        {isArchive(props.note) ? (
-          <NoteButton
-            onChange={() => dispatch(deleteArchive(props.id))}
-            icon={<AiOutlineDelete fontSize={"20px"} />}
-          />
-        ) : (
-          <NoteButton
-            onChange={() => dispatch(deleteNote(props.id))}
-            icon={<AiOutlineDelete fontSize={"20px"} />}
-          />
-        )}
+        <NoteButton
+          onChange={() => dispatch(deleteNote(props.id))}
+          icon={<AiOutlineDelete fontSize={"20px"} />}
+        />
       </Flex>
     </Box>
   );

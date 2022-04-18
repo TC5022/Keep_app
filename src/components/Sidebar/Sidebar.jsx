@@ -1,17 +1,12 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
-import {
-  MdOutlineHighlight,
-  MdOutlineArchive,
-  MdLabelOutline,
-} from "react-icons/md";
+import { MdOutlineHighlight, MdLabelOutline } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 
 import { NavLinks } from "./Navlinks";
 import { useSelector } from "react-redux";
 
-function Sidebar(props) {
-
+function Sidebar() {
   const labels = useSelector((state) => state.labels);
 
   const location = useLocation();
@@ -41,25 +36,19 @@ function Sidebar(props) {
         isActive={location.pathname === "/"}
       />
 
-      <NavLinks
-        link="/archives"
-        icon={<MdOutlineArchive style={styles} />}
-        text="Archives"
-        isActive={location.pathname === "/archives"}
-      />
-
-      {labels && labels.map((label, index)=>{
-        return (
-          <NavLinks
-            key={index}
-            link={`/labels/${label.name}`}
-            text={label.name}
-            linkState={label.notes}
-            icon={<MdLabelOutline style={styles} />}
-            isActive={location.pathname === `/labels/${label.name}`}
-          />
-        );
-      })}
+      {labels &&
+        labels.map((label, index) => {
+          return (
+            <NavLinks
+              key={index}
+              link={`/labels/${label.name}`}
+              text={label.name}
+              linkState={label.notes}
+              icon={<MdLabelOutline style={styles} />}
+              isActive={location.pathname === `/labels/${label.name}`}
+            />
+          );
+        })}
     </Flex>
   );
 }

@@ -4,10 +4,6 @@ import {
   ADD_NOTE,
   DELETE_NOTE,
   EDIT_NOTE,
-  ARCHIVE_NOTE,
-  UNARCHIVE_NOTE,
-  DELETE_ARCHIVE,
-  COPY_ARCHIVE,
   SEARCH,
   UPDATE_NOTES,
 } from "./actiontypes";
@@ -46,7 +42,7 @@ export function addNote(note) {
 }
 
 export function createNote(note) {
-  const {title, content} = note;
+  const { title, content } = note;
   return (dispatch) => {
     const url = APIUrls.createNote();
     fetch(url, {
@@ -55,13 +51,13 @@ export function createNote(note) {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `Bearer ${getAuthToken()}`,
       },
-      body: getFormBody({title, content}),
+      body: getFormBody({ title, content }),
     })
       .then((response) => response.json())
       .then((data) => {
-        if(data.note){
+        if (data.note) {
           dispatch(addNote(data.note));
-        }  
+        }
       });
   };
 }
@@ -75,13 +71,13 @@ export function copyNote(noteId) {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `Bearer ${getAuthToken()}`,
       },
-      body: getFormBody({noteId}),
+      body: getFormBody({ noteId }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.note) {
           dispatch(addNote(data.note));
-        }else{
+        } else {
           console.log(data.message);
         }
       });
@@ -97,16 +93,16 @@ export function editNote(title, content, noteId) {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `Bearer ${getAuthToken()}`,
       },
-      body: getFormBody({noteId, title, content }),
+      body: getFormBody({ noteId, title, content }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.note) {
           dispatch(editSuccess(data.note, noteId));
-         const labelArrayLength = data.note.labels.length;
-         for (let a = 0; a < labelArrayLength; a++) {
-           dispatch(editLabelNote(data.note.labels[a]._id, noteId, data.note));
-         }
+          const labelArrayLength = data.note.labels.length;
+          for (let a = 0; a < labelArrayLength; a++) {
+            dispatch(editLabelNote(data.note.labels[a]._id, noteId, data.note));
+          }
         } else {
           console.log(data.message);
         }
@@ -129,12 +125,10 @@ export function changeColor(color, noteId) {
       .then((data) => {
         if (data.note) {
           dispatch(editSuccess(data.note, noteId));
-           const labelArrayLength = data.note.labels.length;
-           for (let a = 0; a < labelArrayLength; a++) {
-             dispatch(
-               editLabelNote(data.note.labels[a]._id, noteId, data.note)
-             );
-           }
+          const labelArrayLength = data.note.labels.length;
+          for (let a = 0; a < labelArrayLength; a++) {
+            dispatch(editLabelNote(data.note.labels[a]._id, noteId, data.note));
+          }
         } else {
           console.log(data.message);
         }
@@ -202,36 +196,6 @@ export function deleteSuccess(id) {
   return {
     type: DELETE_NOTE,
     id,
-  };
-}
-
-export function archiveNote(note, id) {
-  return {
-    type: ARCHIVE_NOTE,
-    note,
-    id,
-  };
-}
-
-export function unarchiveNote(note, id) {
-  return {
-    type: UNARCHIVE_NOTE,
-    note,
-    id,
-  };
-}
-
-export function deleteArchive(id) {
-  return {
-    type: DELETE_ARCHIVE,
-    id,
-  };
-}
-
-export function copyArchive(note) {
-  return {
-    type: COPY_ARCHIVE,
-    note,
   };
 }
 

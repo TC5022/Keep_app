@@ -1,29 +1,24 @@
 import {
-  ARCHIVE_NOTE,
-  COPY_ARCHIVE,
   COPY_NOTE,
   ADD_NOTE,
-  DELETE_ARCHIVE,
   DELETE_NOTE,
   EDIT_NOTE,
-  UNARCHIVE_NOTE,
   SEARCH,
   UPDATE_NOTES,
 } from "../actions/actiontypes";
 
 const initialState = {
   notes: [],
-  archives: [],
-  search: []
+  search: [],
 };
 
 export default function notes(state = initialState, action) {
   switch (action.type) {
     case UPDATE_NOTES:
-    return {
-      ...state,
-      notes: action.notes
-    }
+      return {
+        ...state,
+        notes: action.notes,
+      };
     case ADD_NOTE:
       return {
         ...state,
@@ -36,7 +31,7 @@ export default function notes(state = initialState, action) {
       return { ...state, notes: filteredNotes };
     case EDIT_NOTE:
       const updatedNotes = [...state.notes];
-      const index = updatedNotes.findIndex(note => note._id === action.id);
+      const index = updatedNotes.findIndex((note) => note._id === action.id);
       updatedNotes[index] = action.newNote;
 
       return {
@@ -48,45 +43,14 @@ export default function notes(state = initialState, action) {
         ...state,
         notes: [action.note, ...state.notes],
       };
-    case ARCHIVE_NOTE:
-      const filteredNote = state.notes.filter(
-        (note, index) => index !== action.id
-      );
-      return {
-        ...state,
-        notes: filteredNote,
-        archives: [action.note, ...state.archives],
-      };
-    case UNARCHIVE_NOTE:
-      const filteredArchive = state.archives.filter(
-        (note, index) => index !== action.id
-      );
-      return {
-        ...state,
-        notes: [action.note, ...state.notes],
-        archives: filteredArchive,
-      };
-    case COPY_ARCHIVE:
-      return {
-        ...state,
-        archives: [action.note, ...state.archives],
-      };
-    case DELETE_ARCHIVE:
-      const filteredArchives = state.archives.filter(
-        (note, index) => index !== action.id
-      );
-      return { ...state, archives: filteredArchives };
     case SEARCH:
-      const {text} = action;
+      const { text } = action;
       const notess = state.notes.filter(
         (note) => note.title.includes(text) || note.content.includes(text)
       );
-      const archivess = state.archives.filter(
-        (note) => note.title.includes(text) || note.content.includes(text)
-      );
       return {
         ...state,
-        search: [...notess, ...archivess],
+        search: [...notess],
       };
     default:
       return state;

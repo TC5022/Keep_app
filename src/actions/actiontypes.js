@@ -4,11 +4,6 @@ export const EDIT_NOTE = "EDIT_NOTE";
 export const COPY_NOTE = "COPY_NOTE";
 export const UPDATE_NOTES = "UPDATE_NOTES";
 
-export const ARCHIVE_NOTE = "ARCHIVE_NOTE";
-export const UNARCHIVE_NOTE = "UNARCHIVE_NOTE";
-export const DELETE_ARCHIVE = "DELETE_ARCHIVE";
-export const COPY_ARCHIVE = "COPY_ARCHIVE";
-
 export const SEARCH = "SEARCH";
 
 //label action types
