@@ -3,15 +3,14 @@ import { Flex } from "@chakra-ui/react";
 
 import { RegisterForm } from "../components/RegisterForm";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export function Register() {
-  const user = localStorage.getItem("user");
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   useEffect(() => {
-    if (user) {
+    if (user.name) {
       navigate("/", { replace: true });
-    } else {
-      navigate("/register", { replace: true });
     }
   });
   return (

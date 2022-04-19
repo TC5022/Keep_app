@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router";
+import jwtDecode from "jwt-decode";
 
 import { connect, useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -10,15 +11,29 @@ import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { fetchNotes } from "./actions/notes";
 import { fetchLabels } from "./actions/labels";
+import { getAuthToken } from "./helpers/utils";
+import { authenticateUser } from "./actions/auth";
 
 function App() {
 
   const dispatch = useDispatch();
+  const token = getAuthToken();
 
   useEffect(() => {
+    if (token) {
+      const user = jwtDecode(token);
+      console.log(user);
+      dispatch(
+        authenticateUser({
+          email: user.email,
+          userId: user.userId,
+          name: user.name,
+        })
+      );
       dispatch(fetchNotes());
       dispatch(fetchLabels());
-  }, [dispatch]);
+    }
+  }, [token, dispatch]);
 
   return (
     <BrowserRouter>

@@ -3,15 +3,14 @@ import { Flex } from "@chakra-ui/react";
 
 import { LoginForm } from "../components/LoginForm";
 import { useNavigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export function Login() {
-  const user = localStorage.getItem("user");
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   useEffect(() => {
-    if (user) {
+    if (user.name) {
       navigate("/", { replace: true });
-    } else {
-      navigate("/login", { replace: true });
     }
   });
   return (

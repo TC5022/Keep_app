@@ -1,7 +1,7 @@
 import React from "react";
 import { IconButton } from "@chakra-ui/react";
 
-export const NoteButton = ({ onChange, icon }) => {
+export const NoteButton = ({ onChange, icon, size }) => {
   return (
     <>
       <IconButton
@@ -11,6 +11,7 @@ export const NoteButton = ({ onChange, icon }) => {
         bg="none"
         borderRadius="full"
         icon={icon}
+        size={size || "md"}
       />
     </>
   );

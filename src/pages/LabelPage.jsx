@@ -7,12 +7,12 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function LabelPage() {
-  const user = localStorage.getItem("user");
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    if (!user) {
+    if (!user.name) {
       navigate("/login", { replace: true });
     }
   }, [user, navigate, location.pathname]);

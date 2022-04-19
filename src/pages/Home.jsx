@@ -8,11 +8,11 @@ import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 
 function Home() {
-  const user = localStorage.getItem("user");
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
+    if (!user.name) {
       navigate("/login", { replace: true });
     }
   }, [user, navigate]);

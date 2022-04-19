@@ -16,9 +16,10 @@ function Sidebar() {
   const location = useLocation();
   const styles = {
     display: "inline",
-    fontSize: "30px",
+    fontSize: "24px",
     marginBottom: "10px",
-    marginRight: "15px",
+    marginLeft: "15px",
+    marginRight: "10px"
   };
 
   return (
@@ -42,15 +43,19 @@ function Sidebar() {
 
       <Button
         w="full"
-        size="lg"
-        fontSize="xl"
+        h="48px"
+        size="sm"
         justifyContent={"start"}
         variant="ghost"
-        _hover={{ bgColor: "#EDF2F7" }}
         _focus={{ outline: "none" }}
-        bgColor={"transparent"}
-        py={8}
+        py={3}
+        color="#202124"
+        fontSize="1rem"
+        fontFamily="'Google Sans',Roboto,Arial,sans-serif"
+        fontWeight="500"
         borderRadius="full"
+        _hover={{ bgColor: "#EDF2F7" }}
+        bgColor={"transparent"}
         leftIcon={<AiOutlineEdit style={styles} />}
         onClick={onOpen}
       >

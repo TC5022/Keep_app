@@ -55,7 +55,7 @@ function Note(props) {
     currImage: "",
   });
 
-  // const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (state.id !== props.id) {
@@ -136,19 +136,24 @@ function Note(props) {
   return (
     <Box
       borderRadius="10px"
-      p={5}
-      m="16px"
+      p=".5rem 0"
+      my="0"
+      mx="0.7rem"
       border="1px solid"
-      _hover={{ boxShadow: "0 2px 5px #ccc" }}
-      w="20vw"
+      _hover={{
+        boxShadow:
+          "0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)",
+      }}
+      w="18vw"
       bg="#fff"
       float="left"
       style={{
         backgroundColor: state.color,
         borderColor: state.color || "#e0e0e0",
+        transition: "all 300ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
       }}
-      // onMouseEnter={() => setVisible(true)}
-      // onMouseLeave={() => setVisible(false)}
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
     >
       {state.imagesrc?.length !== 0 && (
         <SimpleGrid minChildWidth="80px" spacing={2} mb={3}>
@@ -164,7 +169,17 @@ function Note(props) {
           value={state.title}
         ></Input>
       ) : (
-        <Heading size="md" fontFamily="body" my={1}>
+        <Heading
+          as="h6"
+          color="rgba(0, 0, 0, 0.87)"
+          size="md"
+          fontFamily="Metropolis,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'"
+          p="12px 16px 0px 16px"
+          fontSize="1.25rem"
+          flex-wrap="wrap"
+          letterSpacing="0.015rem"
+          lineHeight="1.44"
+        >
           {state.title}
         </Heading>
       )}
@@ -176,44 +191,57 @@ function Note(props) {
           value={state.content}
         ></Input>
       ) : (
-        <Text fontSize="2xl" mb={1}>
+        <Text
+          fontSize="1rem"
+          color="rgba(0, 0, 0, 0.87)"
+          p="4px 16px 12px 16px"
+          letterSpacing="0.015rem"
+          lineHeight="1.44"
+          fontFamily="Roboto,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol'"
+        >
           {state.content}
         </Text>
       )}
 
-      {props.labels?.length !== 0 &&
-        props.labels?.map((label, index) => (
-          <Tag
-            borderRadius="full"
-            size="md"
-            variant="solid"
-            key={index}
-            background="rgba(0,0,0,0.08)"
-            color="#00000"
-          >
-            <TagLabel>{label.name}</TagLabel>
-            <TagCloseButton
-              _focus={{ outline: "none" }}
-              onClick={() => dispatch(removeLabelFromNote(props.id, label._id))}
-            />
-          </Tag>
-        ))}
+      <Flex flexWrap="wrap" p="0 10px">
+        {props.labels?.length !== 0 &&
+          props.labels?.map((label, index) => (
+            <Box p="2.88px 4px" key={index}>
+              <Tag
+                borderRadius="full"
+                size="md"
+                variant="solid"
+                background="rgba(0,0,0,0.08)"
+                color="#00000"
+              >
+                <TagLabel>{label.name}</TagLabel>
+                <TagCloseButton
+                  _focus={{ outline: "none" }}
+                  onClick={() =>
+                    dispatch(removeLabelFromNote(props.id, label._id))
+                  }
+                />
+              </Tag>
+            </Box>
+          ))}
+      </Flex>
 
       <Flex
         flexDir="row"
-        ml="-15px"
-        // visibility={!visible && "hidden"}
-        // style={{transition:"backgroundColor 0.218s ease-in-out,boxShadow 0.218s ease-in-out"}}
+        p="8px 3px"
+        justifyContent="space-between"
+        transition="opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+        opacity={visible ? 1 : 0}
       >
         {state.editMode ? (
           <NoteButton
             onChange={() => handleSave()}
-            icon={<AiOutlineSave fontSize={"20px"} />}
+            icon={<AiOutlineSave fontSize={"18px"} />}
           />
         ) : (
           <NoteButton
             onChange={() => handleChange("editMode", true)}
-            icon={<AiOutlineEdit fontSize={"20px"} />}
+            icon={<AiOutlineEdit fontSize={"18px"} />}
           />
         )}
 
@@ -222,7 +250,7 @@ function Note(props) {
           _focus={{ bg: "none", outline: "none" }}
           bg="none"
           borderRadius="full"
-          icon={<MdOutlineDraw fontSize={"20px"} />}
+          icon={<MdOutlineDraw fontSize={"18px"} />}
           onClick={onOpen}
         />
         <Canvas isOpen={isOpen} onClose={onClose} handleChange={handleChange} />
@@ -237,7 +265,7 @@ function Note(props) {
               _focus={{ bg: "none", outline: "none" }}
               bg="none"
               borderRadius="full"
-              icon={<IoColorPaletteOutline fontSize={"20px"} />}
+              icon={<IoColorPaletteOutline fontSize={"18px"} />}
             />
           </PopoverTrigger>
           <PopoverContent
@@ -273,12 +301,12 @@ function Note(props) {
 
         <NoteButton
           onChange={() => dispatch(copyNote(props.id))}
-          icon={<AiOutlineCopy fontSize={"20px"} />}
+          icon={<AiOutlineCopy fontSize={"18px"} />}
         />
 
         <NoteButton
           onChange={() => dispatch(deleteNote(props.id))}
-          icon={<AiOutlineDelete fontSize={"20px"} />}
+          icon={<AiOutlineDelete fontSize={"18px"} />}
         />
       </Flex>
     </Box>

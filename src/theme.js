@@ -12,8 +12,8 @@ const config = {
 const theme = extendTheme({
   config,
   fonts: {
-    heading: "McLaren, cursive",
-    body: "Montserrat, sans-serif",
+    heading: "'Product Sans',Arial,sans-serif",
+    body: "'Roboto',arial,sans-serif",
   },
 });
 

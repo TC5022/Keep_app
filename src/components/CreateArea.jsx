@@ -10,8 +10,8 @@ function CreateArea(props) {
   const notes = useSelector((state) => state.notes);
   const [isExpanded, setIsExpanded] = useState(false);
   const [note, setNote] = useState({
-    title: "hi",
-    content: "hello",
+    title: "",
+    content: "",
     imagesrc: [],
     color: "#fffff",
     labels: [] 
@@ -44,8 +44,8 @@ function CreateArea(props) {
     dispatch(createNote(note));
     setNote({
       ...note,
-      title: "hi",
-      content: "hello",
+      title: "",
+      content: "",
       imagesrc: [],
       color: "",
       labels: []
@@ -67,6 +67,8 @@ function CreateArea(props) {
             onChange={handleChange}
             value={note.title}
             placeholder="Title"
+            _placeholder={{ color: "#202124", opacity: 0.8 }}
+            w="100%"
           />
         ) : null}
         <Textarea
@@ -76,7 +78,9 @@ function CreateArea(props) {
           onChange={handleChange}
           value={note.content}
           placeholder="Take a note..."
+          _placeholder={{ color: "#202124", opacity: 0.8 }}
           rows={isExpanded ? 3 : 1}
+          w="100%"
         />
 
         <Flex>

@@ -1,17 +1,34 @@
 import { APIUrls } from "../helpers/urls";
 import { getFormBody } from "../helpers/utils";
-import { LOGIN_FAIL, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, SIGNUP_FAIL, SIGNUP_START, SIGNUP_SUCCESS } from "./actiontypes";
-
-export function startLogin() {
-  return {
-    type: LOGIN_START,
-  };
-}
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  SIGNUP_FAIL,
+  SIGNUP_SUCCESS,
+  AUTHENTICATE_USER,
+  LOG_OUT,
+  CLEAR_AUTH_STATE,
+} from "./actiontypes";
+import { fetchLabels } from "./labels";
+import { fetchNotes } from "./notes";
 
 export function loginFailed(errormessage) {
   return {
     type: LOGIN_FAIL,
     error: errormessage,
+  };
+}
+
+export function authenticateUser(user) {
+  return {
+    type: AUTHENTICATE_USER,
+    user,
+  };
+}
+
+export function clearAuthState() {
+  return {
+    type: CLEAR_AUTH_STATE,
   };
 }
 
@@ -45,6 +62,8 @@ export function login(email, password) {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", data.user.name);
           dispatch(loginSuccess(data.user));
+          dispatch(fetchNotes());
+          dispatch(fetchLabels());
           return;
         }
         dispatch(loginFailed(data.message));
@@ -74,12 +93,6 @@ export function signup(name, email, password) {
         }
         dispatch(signupFailed(data.message));
       });
-  };
-}
-
-export function startSignup() {
-  return {
-    type: SIGNUP_START,
   };
 }
 

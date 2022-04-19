@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   notes: [],
-  search: [],
+  searchText: "",
 };
 
 export default function notes(state = initialState, action) {
@@ -44,13 +44,9 @@ export default function notes(state = initialState, action) {
         notes: [action.note, ...state.notes],
       };
     case SEARCH:
-      const { text } = action;
-      const notess = state.notes.filter(
-        (note) => note.title.includes(text) || note.content.includes(text)
-      );
       return {
         ...state,
-        search: [...notess],
+        searchText: action.text,
       };
     default:
       return state;

@@ -15,14 +15,12 @@ export const REMOVE_NOTE_FROM_LABEL = "REMOVE_NOTE_FROM_LABEL";
 export const DELETE_LABEL = "DELETE_LABEL";
 
 //login action types
-export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
-
 export const LOG_OUT = 'LOG_OUT';
+export const AUTHENTICATE_USER = "AUTHENTICATE_USER";
 
 //signup action types
-export const SIGNUP_START = 'SIGNUP_START';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 export const CLEAR_AUTH_STATE = 'CLEAR_AUTH_STATE';
