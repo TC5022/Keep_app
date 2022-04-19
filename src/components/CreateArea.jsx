@@ -4,7 +4,7 @@ import Fab from "@material-ui/core/Fab";
 
 import { Textarea, Input, Flex } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { createNote } from "../actions";
+import { createNote } from "../actions/notes";
 
 function CreateArea(props) {
   const notes = useSelector((state) => state.notes);

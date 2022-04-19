@@ -18,7 +18,6 @@ function Home() {
   }, [user, navigate]);
 
   const notes = useSelector((state) => state.notes.notes);
-  console.log("re");
   return (
     <>
       <Flex maxW="100vw" flexDir="column">

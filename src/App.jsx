@@ -8,8 +8,8 @@ import LabelPage from "./pages/LabelPage"
 import Search from "./pages/Search";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
-import { fetchNotes } from "./actions";
-import { fetchLabels } from "./actions/label";
+import { fetchNotes } from "./actions/notes";
+import { fetchLabels } from "./actions/labels";
 
 function App() {
 

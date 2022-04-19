@@ -2,7 +2,7 @@ import React from "react";
 import { MdHighlight, MdOutlineSearch } from "react-icons/md";
 import { Heading, Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { search } from "../actions";
+import { search } from "../actions/notes";
 import { Link } from "react-router-dom";
 
 function Header() {

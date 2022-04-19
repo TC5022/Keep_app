@@ -1,13 +1,17 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Button, useDisclosure } from "@chakra-ui/react";
 import { MdOutlineHighlight, MdLabelOutline } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 
 import { NavLinks } from "./Navlinks";
 import { useSelector } from "react-redux";
 
+import { AiOutlineEdit } from "react-icons/ai";
+import { EditLabels } from "./EditLabels";
+
 function Sidebar() {
   const labels = useSelector((state) => state.labels);
+   const { onOpen, isOpen, onClose } = useDisclosure();
 
   const location = useLocation();
   const styles = {
@@ -35,6 +39,25 @@ function Sidebar() {
         text="Notes"
         isActive={location.pathname === "/"}
       />
+
+      <Button
+        w="full"
+        size="lg"
+        fontSize="xl"
+        justifyContent={"start"}
+        variant="ghost"
+        _hover={{ bgColor: "#EDF2F7" }}
+        _focus={{ outline: "none" }}
+        bgColor={"transparent"}
+        py={8}
+        borderRadius="full"
+        leftIcon={<AiOutlineEdit style={styles} />}
+        onClick={onOpen}
+      >
+        Edit Labels
+      </Button>
+
+      <EditLabels isOpen={isOpen} onClose={onClose} labels={labels} />
 
       {labels &&
         labels.map((label, index) => {

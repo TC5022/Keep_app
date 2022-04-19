@@ -12,6 +12,7 @@ export const ADD_LABEL = "ADD_LABEL";
 export const EDIT_LABEL_NOTE = "EDIT_LABEL_NOTE";
 export const ADD_NOTE_TO_LABEL = "ADD_NOTE_TO_LABEL";
 export const REMOVE_NOTE_FROM_LABEL = "REMOVE_NOTE_FROM_LABEL";
+export const DELETE_LABEL = "DELETE_LABEL";
 
 //login action types
 export const LOGIN_START = 'LOGIN_START';

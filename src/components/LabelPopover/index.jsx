@@ -17,7 +17,7 @@ import {
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdNewLabel, MdOutlineSearch } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { addLabelToNote, createLabel } from "../../actions/label";
+import { addLabelToNote, createNoteLabel } from "../../actions/labels";
 
 export function LabelPopover(props) {
   const [labelInput, setLabelInput] = useState("");
@@ -32,7 +32,7 @@ export function LabelPopover(props) {
     return index === -1 ? false : true;
   }
   const handlecreate = () => {
-    dispatch(createLabel(props.id, labelInput));
+    dispatch(createNoteLabel(props.id, labelInput));
     setLabelInput("");
   }
   return (

@@ -7,7 +7,7 @@ import {
   SEARCH,
   UPDATE_NOTES,
 } from "./actiontypes";
-import { editLabelNote, removeNoteFromLabel } from "./label";
+import { addNoteToLabel, editLabelNote, removeNoteFromLabel } from "./labels";
 
 export function fetchNotes() {
   return (dispatch) => {
@@ -77,6 +77,9 @@ export function copyNote(noteId) {
       .then((data) => {
         if (data.note) {
           dispatch(addNote(data.note));
+          for(let a = 0; a<data.note.labels.length; a++){
+            dispatch(addNoteToLabel(data.note.labels[a]._id, data.note));
+          }
         } else {
           console.log(data.message);
         }

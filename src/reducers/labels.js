@@ -4,6 +4,7 @@ import {
   EDIT_LABEL_NOTE,
   ADD_NOTE_TO_LABEL,
   REMOVE_NOTE_FROM_LABEL,
+  DELETE_LABEL
 } from "../actions/actiontypes";
 
 
@@ -46,11 +47,10 @@ export default function labels(state = [], action) {
         );
         updatedLabels[labelindex].notes = updatedNotesArray;
         return updatedLabels;
+      case DELETE_LABEL:
+        updatedLabels = state.filter((label) => label._id !== action.labelId)
+        return updatedLabels;
       default:
         return state;
     }
 }
-
-//  const updatedNotes = [...state.notes];
-//  const index = updatedNotes.findIndex((note) => note._id === action.id);
-//  updatedNotes[index] = action.newNote;

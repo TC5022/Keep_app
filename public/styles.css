@@ -10,6 +10,7 @@ body {
   background: #eee;
   background-image: url("https://www.transparenttextures.com/patterns/cubes.png") !important;
   padding: 0 16px;
+  color: #202124
 }
 
 header h1 {

@@ -38,9 +38,10 @@ import {
   copyNote,
   deleteNote,
   editNote,
-} from "../actions";
+} from "../actions/notes";
 import { NoteButton } from "./NoteButton";
 import { LabelPopover } from "./LabelPopover";
+import { removeLabelFromNote } from "../actions/labels";
 
 function Note(props) {
   const [state, setState] = useState({
@@ -126,17 +127,6 @@ function Note(props) {
         });
   }
 
-  function deleteLabel(deleteLabel) {
-    const filteredLabels = state.labels.filter(
-      (label) => label !== deleteLabel
-    );
-
-    setState({
-      ...state,
-      labels: filteredLabels,
-    });
-  }
-
   function handleSave() {
     const { title, content, id } = state;
     dispatch(editNote(title, content, id));
@@ -204,7 +194,7 @@ function Note(props) {
             <TagLabel>{label.name}</TagLabel>
             <TagCloseButton
               _focus={{ outline: "none" }}
-              onClick={() => deleteLabel(label)}
+              onClick={() => dispatch(removeLabelFromNote(props.id, label._id))}
             />
           </Tag>
         ))}
