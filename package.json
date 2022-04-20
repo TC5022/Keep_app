@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
-  "main": "backend/routes.js",
+  "main": "src/index.js",
   "type": "module",
   "dependencies": {
     "@chakra-ui/react": "^1.8.6",
