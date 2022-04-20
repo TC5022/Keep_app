@@ -1,4 +1,4 @@
-const API_ROOT = "http://localhost:8000/v1";
+const API_ROOT = process.env.API_URL;
 
 export const APIUrls = {
   login: () => `${API_ROOT}/user/login`,
